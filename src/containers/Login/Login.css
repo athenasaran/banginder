@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container img {
+    width: 30%;
+}
+
+.input {
+    margin-top: 2%;
+    width: 50%;
+}
+
+.button {
+    margin-top: 3%;
+    width: 50%;
+    align-items: center;
+    border-width: 2%;
+}
+
+.button:hover {
+    background-color: #4a7ccf;
+}

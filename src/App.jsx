@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
-import Header from "./Header";
-import TinderCards from "./TinderCards";
+import Header from "./components/Header/Header";
+import Login from "./containers/Login/Login";
+import TinderCards from "./containers/TinderCard/TinderCards";
 
 function App() {
   return (
     <div className="App">
-      <Header />
+
       <Router>
         <Switch>
           <Route path="/chat">
@@ -19,11 +20,12 @@ function App() {
           </Route>
 
           <Route path="/perfis">
+            <Header />
             <TinderCards />
           </Route>
 
           <Route path="/">
-            <h1>Login</h1>
+            <Login />
           </Route>
         </Switch>
       </Router>
