@@ -1,0 +1,29 @@
+.chatRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    height: 70px;
+    border-bottom: 1px solid #fff;
+}
+
+.detalhes {
+    flex: 1;
+}
+
+.detalhes>p {
+    color: gray;
+}
+
+.timestamp {
+    color: lightgray;
+}
+
+.avatar {
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

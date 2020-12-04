@@ -1,4 +1,4 @@
-.header{
+.header {
     display: flex;
     justify-content: space-between;
     margin: 0 2%;
@@ -6,12 +6,12 @@
     align-items: center;
 }
 
-.header-logo{
+.header-logo {
     height: 50px;
     object-fit: contain;
 }
 
 
-.header-icon{
+.header-icon {
     padding: 20px;
 }

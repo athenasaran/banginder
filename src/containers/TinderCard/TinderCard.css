@@ -1,9 +1,9 @@
 .card {
     position: relative;
-    width: 600px;
-    padding: 20px;
+    width: 500px;
+    padding: 2%;
     max-width: 85vw;
-    height: 70vh;
+    height: 58vh;
     border-radius: 20px;
     background-size: cover;
     background-position: center;
@@ -12,7 +12,7 @@
 
 .card>h3 {
     position: absolute;
-    bottom: 10px;
+    bottom: 1%;
     color: white;
     font-size: 30px;
 }
@@ -20,7 +20,7 @@
 .tinderContainer {
     display: flex;
     justify-content: center;
-    margin-top: 5vh;
+    margin-top: 3vh;
 }
 
 
