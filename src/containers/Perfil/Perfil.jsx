@@ -7,7 +7,7 @@ import React, { useState } from "react";
 export default function Perfil(props){
     return (
         <React.Fragment>
-           <h1>Perfil</h1>
+            
         </React.Fragment>
     );
 }

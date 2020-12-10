@@ -1,53 +1,116 @@
-import React, { useState } from 'react'
-import SwipeButtons from '../../components/SwipeButtons/SwipeButtons';
+import React, { useState, useEffect } from "react";
+import SwipeButtons from "../../components/SwipeButtons/SwipeButtons";
 import Header from "../../components/Header/Header";
-import TinderCard from 'react-tinder-card'
-import './TinderCard.css'
+import TinderCard from "react-tinder-card";
+import firebase from "firebase/app";
+import "./TinderCard.css";
 
 function TinderCards() {
-    
-    const [people, setPeople] = useState([
-        {
-            name: 'athena',
-            photo: 'https://avatars3.githubusercontent.com/u/23267293?s=460&u=cb2237120aba2f1292658bd815effe0f0cb304a3&v=4'
-        },
-        {
-            name: 'josy',
-            photo: 'https://avatars2.githubusercontent.com/u/43102874?s=400&u=8030cb9021983e9ff6d5f4fb381072fde0265cb7&v=4'
-        },
-        {
-            name: 'vito',
-            photo: 'https://avatars1.githubusercontent.com/u/37223412?s=400&u=f92c051d32393da9d9a2d4e99e1bd4f118904c32&v=4'
-        }
-
-    ]);
-
-    //setPeople([...people, 'athena', 'josy', 'vito'])
+  const [people, setPeople] = useState([
+  ]);
+  const userUid = localStorage.getItem("user_id");
+  
+  const handleCardLeft = (direction) => {
+    const enemyUid = people[0].uid;
+    if (direction == "left") {
+      console.log(people[0].name);
+      firebase
+        .firestore()
+        .collection("Hate")
+        .doc(userUid)
+        .collection("HateList")
+        .doc(enemyUid)
+        .set({
+          message: [
+            {
+              text: "",
+              date: "",
+            },
+          ],
+        });
+    }
+    setPeople((people) => [...people.slice(1)]);
+  };
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const firestore = firebase.firestore();
+    setLoading(true);
+    firestore
+      .collection("registerInfo")
+      .get()
+      .then((snap) => {
+        const hateList = snap.docs
+          .map((e) => e.id)
+          .filter((id) => id !== userUid);
+        firestore
+          .collection("Hate")
+          .doc(userUid)
+          .collection("HateList")
+          .get()
+          .then((snap) => {
+            const ids = snap.docs.map((e) => e.id);
+            hateList
+              .filter((s) => !ids.includes(s))
+              .forEach((uid) =>
+                firestore
+                  .collection("registerInfo")
+                  .doc(uid)
+                  .get()
+                  .then((snap) => {
+                    const data = snap.data();
+                    setPeople((people) => [
+                      {
+                        uid: data.uid,
+                        url: data.url,
+                        bio: data.bio,
+                        dislikes: data.dislikes,
+                        likes: data.likes,
+                        name: data.name + " " + data.surname,
+                      },
+                      ...people,
+                    ]);
+                  })
+              )
+              setLoading(false);
+          });
+      })
+      .catch(() => setLoading(false));
+      return () => {
+        setPeople([])
+      }
+  }, []);
+  //setPeople([...people, 'athena', 'josy', 'vito'])
+  if (loading) {
+    return <div>Carregando...</div>;
+  } else
     return (
-        <React.Fragment>
-
+      <React.Fragment>
         <Header />
         <div>
-            <div className="tinderContainer">
-
-                {people.map(person => (
-                    <TinderCard
-                        className="swipe"
-                        key={person.name}
-                        preventSwipe={['up', 'down']}
-                    >
-                        <div className="card" style={{ backgroundImage: `url(${person.photo})` }}>
-                            <h3>{person.name}</h3>
-                        </div>
-                    </TinderCard>
-                ))}
-            </div>
+          <div className="tinderContainer">
+            {people
+              .slice(0)
+              .reverse()
+              .map((person) => (
+                <TinderCard
+                  onCardLeftScreen={handleCardLeft}
+                  className="swipe"
+                  key={person.uid}
+                  preventSwipe={["up", "down"]}
+                >
+                  <div
+                    className="card"
+                    style={{ backgroundImage: `url(${person.url})` }}
+                  >
+                    <h3>{person.name}</h3>
+                  </div>
+                </TinderCard>
+              ))}
+          </div>
         </div>
         <SwipeButtons />
-
-        </React.Fragment>
-
-    )
+      </React.Fragment>
+    );
 }
 
-export default TinderCards
+export default TinderCards;

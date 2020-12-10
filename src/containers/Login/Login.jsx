@@ -17,9 +17,10 @@ function Login(props) {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((user) => {
+      .then(({user}) => {
         if (user) {
           localStorage.setItem("user_id",user.uid);
+          console.log("Estou salvando",localStorage.getItem("user_id"))
           history.push("/perfis");
         }
       })
