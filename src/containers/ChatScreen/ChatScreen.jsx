@@ -2,6 +2,9 @@
 import React, { useState } from 'react'
 import './ChatScreen.css'
 import Avatar from '@material-ui/core/Avatar';
+import Header from "../../components/Header/Header";
+
+
 
 function ChatScreen() {
 
@@ -13,7 +16,6 @@ function ChatScreen() {
         message: 'oii'
     },
     {
-
         message: 'oii'
     }
 
@@ -27,6 +29,9 @@ function ChatScreen() {
     }
 
     return (
+        <React.Fragment>
+
+        <Header backButton="/chat" />
         <div className="chatScreen">
             <p className="match">YOU MATCHED WITH JPSY ON 04/12/2020</p>
             {messages.map(message =>
@@ -50,6 +55,8 @@ function ChatScreen() {
             </form>
 
         </div >
+        </React.Fragment>
+
     )
 }
 

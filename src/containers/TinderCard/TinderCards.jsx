@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import SwipeButtons from '../../components/SwipeButtons/SwipeButtons';
+import Header from "../../components/Header/Header";
 import TinderCard from 'react-tinder-card'
 import './TinderCard.css'
 
 function TinderCards() {
-
+    
     const [people, setPeople] = useState([
         {
             name: 'athena',
@@ -22,6 +24,9 @@ function TinderCards() {
 
     //setPeople([...people, 'athena', 'josy', 'vito'])
     return (
+        <React.Fragment>
+
+        <Header />
         <div>
             <div className="tinderContainer">
 
@@ -38,6 +43,10 @@ function TinderCards() {
                 ))}
             </div>
         </div>
+        <SwipeButtons />
+
+        </React.Fragment>
+
     )
 }
 

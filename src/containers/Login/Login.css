@@ -1,4 +1,4 @@
-.container {
+.login.container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,27 +6,27 @@
     margin: auto;
 }
 
-.container img {
+.login.container img {
     width: 30%;
 }
 
-.input {
+.login.input {
     margin-top: 2%;
     width: 50%;
 }
 
-.button {
+.login.button {
     margin-top: 3%;
     width: 50%;
     align-items: center;
     border-width: 2%;
 }
 
-.button:hover {
+.login.button:hover {
     background-color: #4a7ccf;
 }
 
-.link {
+.login.link {
     text-decoration: none;
     color: black;
 }
