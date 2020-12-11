@@ -100,7 +100,8 @@ function TinderCards() {
                 >
                   <div
                     className="card"
-                    style={{ backgroundImage: `url(${person.url})` }}
+                    style={{ backgroundImage: `linear-gradient(rgb(0 0 0 / 0%), rgb(102 65 121 / 52%)),url(${person.url})` }}
+                    // linear-gradient(rgba(0, 0, 0, 0), rgb(74 65 121 / 52%))
                   >
                     <h3>{person.name}</h3>
                   </div>
