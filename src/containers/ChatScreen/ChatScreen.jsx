@@ -3,6 +3,7 @@ import "./ChatScreen.css";
 import Avatar from "@material-ui/core/Avatar";
 import Header from "../../components/Header/Header";
 import firebase from "firebase/app";
+import { CircularProgress } from "@material-ui/core";
 
 function ChatScreen(props) {
   const enemyId = window.location.href.split("/chat/")[1];
@@ -33,8 +34,8 @@ function ChatScreen(props) {
       .get()
       .then((snap) => {
         const data = snap.data();
-        if(!data){
-          return
+        if (!data) {
+          return;
         }
         setMessages(
           data.message.map((m) => {
@@ -82,12 +83,24 @@ function ChatScreen(props) {
           .set({
             message: [obj, ...list],
           });
-      })
-      
+      });
+
     setInput("");
   };
   if (loading) {
-    return <div>Carregando...</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "90vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress size={80} />
+      </div>
+    );
   }
   return (
     <React.Fragment>
@@ -114,7 +127,7 @@ function ChatScreen(props) {
             type="text"
             placeholder="Digite sua mensagem"
           />
-          <button onClick={handleSubmit} type="submit" className="button">
+          <button onClick={handleSubmit} type="submit" className="button" style={{display: "flex",textAlign:"center", justifyContent: "center", alignItems: "center", }}>
             ENVIAR
           </button>
         </form>

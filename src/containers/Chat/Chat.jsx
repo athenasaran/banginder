@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import "./Chat.css";
 import ChatRow from "../../components/ChatRow/ChatRow";
 import firebase from "firebase/app";
+import { CircularProgress } from "@material-ui/core";
 
 function Chat() {
   const [exists, setExists] = useState(false);
@@ -19,19 +20,20 @@ function Chat() {
       .get()
       .then((snap) => {
         console.log(snap.docs[0].data());
-        const HateList = snap.docs
-          .map((e) => {
-            return {
-              uid: e.id,
-              message: e
-                .data()
-                .message
-                .filter((e) => e.text !== "")[0]?.text,
-            };
-          })
+        const HateList = snap.docs.map((e) => {
+          return {
+            uid: e.id,
+            message: e.data().message.filter((e) => e.text !== "")[0]?.text,
+          };
+        });
         HateList.filter((e) => {
-          const doc = firestore.collection("Hate").doc(e.uid).collection("HateList").doc(userUid).get()
-          return true
+          const doc = firestore
+            .collection("Hate")
+            .doc(e.uid)
+            .collection("HateList")
+            .doc(userUid)
+            .get();
+          return true;
         }).forEach((e) => {
           firestore
             .collection("registerInfo")
@@ -59,7 +61,19 @@ function Chat() {
   }, []);
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "90vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress size={80} />
+      </div>
+    );
   }
   return (
     <React.Fragment>
