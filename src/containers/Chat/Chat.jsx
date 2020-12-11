@@ -44,10 +44,10 @@ function Chat() {
               setPeople((people) => [
                 ...people,
                 {
-                  name: data.name + " " + data.surname,
-                  url: data.url,
-                  uid: data.uid,
-                  message: e.message,
+                  name: data?.name,
+                  url: data?.url,
+                  uid: data?.uid,
+                  message: e?.message,
                 },
               ]);
             });
