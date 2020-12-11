@@ -27,7 +27,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) => {
-      console.log("Amigo estou aq!!!!!");
       if (isAuthenticated()) {
         return <Component {...props} />;
       } else {

@@ -3,9 +3,9 @@ import "./ChatRow.css"
 import Avatar from '@material-ui/core/Avatar';
 import { Link } from 'react-router-dom';
 
-function ChatRow({ name, message, profilePic, timestamp }) {
+function ChatRow({uid, name, message, profilePic, timestamp }) {
     return (
-        <Link to={`/chat/${name}`}>
+        <Link to={`/chat/${uid}`}>
             <div className="chatRow">
                 <Avatar className="avatar" alt={name} src={profilePic} />
                 <div className="detalhes">
