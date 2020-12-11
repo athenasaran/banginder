@@ -5,9 +5,9 @@ import ChatRow from "../../components/ChatRow/ChatRow";
 import firebase from "firebase/app";
 
 function Chat() {
-  const [loading, setLoading] = useState(false);
   const [exists, setExists] = useState(false);
   const [people, setPeople] = useState([]);
+  const [loading, setLoading] = useState(false);
   const userUid = localStorage.getItem("user_id");
   useEffect(() => {
     const firestore = firebase.firestore();

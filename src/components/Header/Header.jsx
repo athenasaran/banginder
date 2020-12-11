@@ -17,20 +17,20 @@ function Header({backButton}) {
 
             <div className={"group-icons"}>
                 <IconButton onClick={() => history.replace(backButton)}>
-                    <ArrowBackIosIcon fontSize="medium"/>
+                    <ArrowBackIosIcon fontSize="default"/>
                 </IconButton>
 
-                <IconButton>
-                    <PersonIcon fontSize="medium"/>
+                <IconButton onClick={() => history.push("/perfil")}>
+                    <PersonIcon fontSize="default"/>
                 </IconButton>
 
 
-                <IconButton onclick={() => history.push("/chat")}>
-                    <ForumIcon fontSize="medium"/>
+                <IconButton onClick={() => history.push("/chat")}>
+                    <ForumIcon fontSize="default"/>
                 </IconButton>
 
                 <IconButton onClick={() => history.replace(backButton)}>
-                    <ExitToApp fontSize="medium"/>
+                    <ExitToApp fontSize="default"/>
                 </IconButton>
 
             </div>
