@@ -20,8 +20,7 @@ function Cadastro(props) {
             .then(({user}) => {
                 if (user) {
                     localStorage.setItem("user_id", user.uid);
-                    console.log("Estou salvando", localStorage.getItem("user_id"))
-                    history.push("/perfis");
+                    history.push("/registrar");
                 }
             })
             .catch((error) => {

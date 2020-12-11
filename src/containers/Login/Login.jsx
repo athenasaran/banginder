@@ -52,10 +52,8 @@ function Login(props) {
                 <Button className="button" variant="outlined" onClick={handleSubmit}>
                     Login
                 </Button>
-                <Button className="button" variant="outlined">
-                    <Link className="link" to="/cadastro">
-                        Registrar
-                    </Link>
+                <Button className="button" variant="outlined" onClick={() => history.push("/cadastro")}>
+                    Cadastrar
                 </Button>
             </div>
         </div>

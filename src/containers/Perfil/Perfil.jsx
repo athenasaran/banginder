@@ -34,9 +34,7 @@ export default function Perfil(props) {
 
     useEffect(() => {
         const userUid = localStorage.getItem("user_id");
-
         const firestore = firebase.firestore();
-
         firestore
             .collection("registerInfo")
             .doc(userUid)

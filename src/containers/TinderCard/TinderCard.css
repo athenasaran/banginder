@@ -1,6 +1,6 @@
 .card {
     position: relative;
-    width: 450px;
+    width: 500px;
     /*padding: 2%;*/
     max-width: 85vw;
     height: 85vh;
@@ -11,12 +11,12 @@
 }
 
 .card-image {
-    width: 450px;
+    width: 500px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
     border-radius: 20px 20px 0 0;
-    height: 30rem;
+    height: 34rem;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -29,8 +29,8 @@
 
 .card .gostos,.odios{
     padding: 0 1rem;
-    width: 350px;
-    height: 8rem;
+    width: 450px;
+    height: 6rem;
     flex-wrap: wrap;
 }
 
