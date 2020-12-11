@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import logo from "../../assets/img/logo.png";
-import "./Login.css";
+import "./Cadastro.css"
 import TextField from "@material-ui/core/TextField";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import firebase from "firebase/app";
 import {useHistory} from "react-router-dom";
 
-function Login(props) {
+function Cadastro(props) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const history = useHistory()
@@ -16,12 +16,12 @@ function Login(props) {
         console.log(email);
         firebase
             .auth()
-            .signInWithEmailAndPassword(email, password)
+            .createUserWithEmailAndPassword(email, password)
             .then(({user}) => {
                 if (user) {
                     localStorage.setItem("user_id", user.uid);
                     console.log("Estou salvando", localStorage.getItem("user_id"))
-                    history.push("/perfis");
+                    history.push("/registrar");
                 }
             })
             .catch((error) => {
@@ -32,7 +32,7 @@ function Login(props) {
     };
 
     return (
-        <div className={"login"}>
+        <div className={"cadastro"}>
             <div className="container">
                 <img src={logo} alt="banginder"/>
                 <TextField
@@ -50,16 +50,11 @@ function Login(props) {
                     onChange={(event) => setPassword(event.target.value)}
                 />
                 <Button className="button" variant="outlined" onClick={handleSubmit}>
-                    Login
-                </Button>
-                <Button className="button" variant="outlined">
-                    <Link className="link" to="/cadastro">
-                        Registrar
-                    </Link>
+                    Cadastrar
                 </Button>
             </div>
         </div>
     );
 }
 
-export default Login;
+export default Cadastro;

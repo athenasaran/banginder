@@ -30,3 +30,111 @@
     text-decoration: none;
     color: black;
 }
+
+.register{
+    display: grid;
+    place-items: center;
+}
+
+.register .container-user {
+    display: grid;
+    place-items: center;
+    width: 85vw;
+    height: 90vh;
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.register .user-body {
+    width: 90vw;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.register .card-tastes {
+    width: 30vw;
+    background-color: white;
+    border-radius: 16px;
+    height: 350px;
+    padding: 1rem;
+}
+
+.register .card-tastes .add {
+    margin-top: 20px;
+}
+
+.register .card-tastes .add input {
+    border: 2px solid transparent;
+    background-color: #e4e4e4;
+    width: 28vw;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.input::before {
+   border-bottom: 0;
+}
+.input::after{
+    border-bottom: 0;
+}
+
+.forms{
+    width: 60rem;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.forms .form-input{
+    width: 28vw;
+    height: 40px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.forms input{
+    width: 28vw;
+    height: 40px;
+}
+
+
+
+.register .card-tastes .add input:focus, input:active {
+    border: 2px solid transparent;
+    width: 28vw;
+    height: 40px;
+    border-radius: 32px;
+    padding-left: 1rem;
+}
+
+.register .card-item {
+    background-color: transparent;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-around;
+    width: 28vw;
+    margin: 0.5rem 0rem;
+}
+
+.register .card-item p {
+    margin-top: 3px;
+    width: 200px;
+    font-weight: bold;
+}
+
+
+.register input{
+    border: 0 ;
+}
+
+.submit-button{
+    margin-top: 10px;
+    border: 0;
+    background: rgb(74, 204, 74);
+    height: 3rem;
+    width: 10rem;
+    border-radius: 16px;
+    color: white;
+    font-weight: bold;
+}

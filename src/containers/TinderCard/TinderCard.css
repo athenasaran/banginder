@@ -1,9 +1,9 @@
 .card {
     position: relative;
-    width: 350px;
+    width: 450px;
     /*padding: 2%;*/
     max-width: 85vw;
-    height: 75vh;
+    height: 85vh;
     border-radius: 20px;
     background-size: cover;
     background: white center;
@@ -11,12 +11,12 @@
 }
 
 .card-image {
-    width: 350px;
+    width: 450px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
     border-radius: 20px 20px 0 0;
-    height: 10rem;
+    height: 17rem;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -27,15 +27,35 @@
     color: white;
 }
 
+.card .gostos,.odios{
+    padding: 0 1rem;
+    width: 350px;
+    height: 8rem;
+    flex-wrap: wrap;
+}
+
+
+.card .odios-container,.gostos-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card p{
+    margin: 5px;
+    font-size: 0.8rem;
+}
+
+.card h3{
+    font-size: 1rem;
+}
+
 .card .infos{
     padding: 1rem;
 }
 
 .card > h3 {
     position: absolute;
-    bottom: 1%;
     color: white;
-    font-size: 30px;
 }
 
 .tinderContainer {

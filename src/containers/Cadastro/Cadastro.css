@@ -1,0 +1,32 @@
+.cadastro .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+}
+
+.cadastro .container img {
+    width: 30%;
+}
+
+.cadastro .input {
+    margin-top: 2%;
+    width: 50%;
+}
+
+.cadastro .button {
+    margin-top: 3%;
+    width: 50%;
+    align-items: center;
+    border-width: 2%;
+}
+
+.cadastro .button:hover {
+    background-color: #4a7ccf;
+}
+
+.cadastro .link {
+    text-decoration: none;
+    color: black;
+}

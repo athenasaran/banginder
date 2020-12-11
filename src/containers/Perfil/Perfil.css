@@ -1,0 +1,69 @@
+.perfil .user-head{
+    display: flex;
+    width: 22rem;
+    margin: 50px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.perfil .user-head img{
+    border-radius: 100px;
+}
+
+.perfil .container-user{
+    display: grid;
+    place-items: center;
+    width: 98vw;
+}
+.perfil .user-body{
+    width:90vw;
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+
+.perfil .card-tastes{
+    width:30vw;
+    background-color: #f1f1f1;
+    border-radius: 16px;
+    height: 500px;
+    padding: 1rem;
+}
+
+.perfil .card-tastes .add{
+    margin-top: 20px;
+}
+
+.perfil .card-tastes .add input{
+    border: 2px solid #343442b3;
+    width: 28vw;
+    height: 40px;
+    border-radius: 32px;
+}
+
+.perfil .card-tastes .add input:focus,input:active{
+    border: 2px solid #343442b3;
+    width: 28vw;
+    height: 40px;
+    border-radius: 32px;
+    padding-left: 1rem;
+}
+
+.perfil .card-item{
+    background-color: #257b7b4a;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-around;
+    width: 28vw;
+    margin: 0.5rem 0rem;
+}
+
+.perfil .card-item p{
+    margin-top: 3px;
+    width: 200px;
+    font-weight: bold;
+}
+

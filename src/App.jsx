@@ -6,6 +6,7 @@ import Login from "./containers/Login/Login";
 import TinderCards from "./containers/TinderCard/TinderCards";
 import Registrar from "./containers/Registrar/Registrar";
 import Perfil from "./containers/Perfil/Perfil";
+import Cadastro from "./containers/Cadastro/Cadastro";
 import SwipeButtons from "./components/SwipeButtons/SwipeButtons";
 import Chat from "./containers/Chat/Chat";
 import ChatScreen from './containers/ChatScreen/ChatScreen'
@@ -54,9 +55,12 @@ function App() {
 
                             <Route exact path="/registrar" component={Registrar}/>
 
+                            <Route exact path="/cadastro" component={Cadastro}/>
+
                             <PrivateRoute path="/perfil" component={Perfil}/>
 
                             <PrivateRoute exact path="/perfis" component={TinderCards}/>
+
 
                             <Route path="/" component={Login}/>
                         </Switch>

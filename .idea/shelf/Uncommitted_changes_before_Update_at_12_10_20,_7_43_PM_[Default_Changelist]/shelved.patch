@@ -1,0 +1,318 @@
+Index: src/App.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from \"react\";\nimport { BrowserRouter, Redirect, Switch, Route } from \"react-router-dom\";\nimport { isAuthenticated } from \"./auth\";\nimport Header from \"./components/Header/Header\";\nimport Login from \"./containers/Login/Login\";\nimport TinderCards from \"./containers/TinderCard/TinderCards\";\nimport Registrar from \"./containers/Registrar/Registrar\";\nimport Perfil from \"./containers/Perfil/Perfil\";\nimport SwipeButtons from \"./components/SwipeButtons/SwipeButtons\";\nimport Chat from \"./containers/Chat/Chat\";\nimport ChatScreen from \"./containers/ChatScreen/ChatScreen\";\nimport firebase from \"firebase\";\nimport { FirebaseAuthProvider } from \"@react-firebase/auth\";\nimport { FirestoreProvider } from \"@react-firebase/firestore\";\n\nvar firebaseConfig = {\n  apiKey: \"AIzaSyBrKw6x2SiTa511W3tBRNF1jtfkNXAljrY\",\n  authDomain: \"banginder-59b1c.firebaseapp.com\",\n  databaseURL: \"https://banginder-59b1c.firebaseio.com\",\n  projectId: \"banginder-59b1c\",\n  storageBucket: \"banginder-59b1c.appspot.com\",\n  messagingSenderId: \"577753223059\",\n  appId: \"1:577753223059:web:2355a8ad6f3bbc6e916266\",\n};\n\nconst PrivateRoute = ({ component: Component, ...rest }) => (\n  <Route\n    {...rest}\n    render={(props) => {\n      console.log(\"Amigo estou aq!!!!!\");\n      if (isAuthenticated()) {\n        return <Component {...props} />;\n      } else {\n        //setMessage(\"Você não está autenticado!\");\n        return (\n          <Redirect to={{ pathname: \"/\", state: { from: props.location } }} />\n        );\n      }\n    }}\n  />\n);\n\nfunction App() {\n  return (\n    <div className=\"App\">\n      <FirestoreProvider firebase={firebase} {...firebaseConfig}>\n        <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>\n          <BrowserRouter>\n            <Switch>\n              <PrivateRoute exact path=\"/chat/:person\" component={ChatScreen} />\n\n              <PrivateRoute exact path=\"/chat\" component={Chat} />\n\n              <Route exact path=\"/registrar\" component={Registrar} />\n\n              <PrivateRoute path=\"/perfil\" component={Perfil} />\n\n              <PrivateRoute exact path=\"/perfis\" component={TinderCards} />\n\n              <Route path=\"/\" component={Login} />\n            </Switch>\n          </BrowserRouter>\n        </FirebaseAuthProvider>\n      </FirestoreProvider>\n    </div>\n  );\n}\n\nexport default App;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.jsx b/src/App.jsx
+--- a/src/App.jsx	(revision 7bce049c3ea2c5a50f5aea6659a95cf4147d87d0)
++++ b/src/App.jsx	(date 1607638985332)
+@@ -1,6 +1,6 @@
+ import React from "react";
+-import { BrowserRouter, Redirect, Switch, Route } from "react-router-dom";
+-import { isAuthenticated } from "./auth";
++import {BrowserRouter, Redirect, Switch, Route} from "react-router-dom";
++import {isAuthenticated} from "./auth";
+ import Header from "./components/Header/Header";
+ import Login from "./containers/Login/Login";
+ import TinderCards from "./containers/TinderCard/TinderCards";
+@@ -8,62 +8,64 @@
+ import Perfil from "./containers/Perfil/Perfil";
+ import SwipeButtons from "./components/SwipeButtons/SwipeButtons";
+ import Chat from "./containers/Chat/Chat";
+-import ChatScreen from "./containers/ChatScreen/ChatScreen";
+-import firebase from "firebase";
+-import { FirebaseAuthProvider } from "@react-firebase/auth";
+-import { FirestoreProvider } from "@react-firebase/firestore";
++import ChatScreen from './containers/ChatScreen/ChatScreen'
++
++
++import {FirebaseAuthProvider} from "@react-firebase/auth";
++import {FirestoreProvider} from "@react-firebase/firestore";
++import firebase from "firebase/app";
+ 
+ var firebaseConfig = {
+-  apiKey: "AIzaSyBrKw6x2SiTa511W3tBRNF1jtfkNXAljrY",
+-  authDomain: "banginder-59b1c.firebaseapp.com",
+-  databaseURL: "https://banginder-59b1c.firebaseio.com",
+-  projectId: "banginder-59b1c",
+-  storageBucket: "banginder-59b1c.appspot.com",
+-  messagingSenderId: "577753223059",
+-  appId: "1:577753223059:web:2355a8ad6f3bbc6e916266",
++    apiKey: "AIzaSyBrKw6x2SiTa511W3tBRNF1jtfkNXAljrY",
++    authDomain: "banginder-59b1c.firebaseapp.com",
++    databaseURL: "https://banginder-59b1c.firebaseio.com",
++    projectId: "banginder-59b1c",
++    storageBucket: "banginder-59b1c.appspot.com",
++    messagingSenderId: "577753223059",
++    appId: "1:577753223059:web:2355a8ad6f3bbc6e916266",
+ };
+ 
+-const PrivateRoute = ({ component: Component, ...rest }) => (
+-  <Route
+-    {...rest}
+-    render={(props) => {
+-      console.log("Amigo estou aq!!!!!");
+-      if (isAuthenticated()) {
+-        return <Component {...props} />;
+-      } else {
+-        //setMessage("Você não está autenticado!");
+-        return (
+-          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+-        );
+-      }
+-    }}
+-  />
++const PrivateRoute = ({component: Component, ...rest}) => (
++    <Route
++        {...rest}
++        render={(props) => {
++            console.log("Amigo estou aq!!!!!");
++            if (isAuthenticated()) {
++                return <Component {...props} />;
++            } else {
++                //setMessage("Você não está autenticado!");
++                return (
++                    <Redirect to={{pathname: "/", state: {from: props.location}}}/>
++                );
++            }
++        }}
++    />
+ );
+ 
+ function App() {
+-  return (
+-    <div className="App">
+-      <FirestoreProvider firebase={firebase} {...firebaseConfig}>
+-        <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+-          <BrowserRouter>
+-            <Switch>
+-              <PrivateRoute exact path="/chat/:person" component={ChatScreen} />
++    return (
++        <div className="App">
++            <FirestoreProvider firebase={firebase} {...firebaseConfig}>
++                <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
++                    <BrowserRouter>
++                        <Switch>
++                            <PrivateRoute exact path="/chat/:person" component={ChatScreen}/>
+ 
+-              <PrivateRoute exact path="/chat" component={Chat} />
++                            <PrivateRoute exact path="/chat" component={Chat}/>
+ 
+-              <Route exact path="/registrar" component={Registrar} />
++                            <Route exact path="/registrar" component={Registrar}/>
+ 
+-              <PrivateRoute path="/perfil" component={Perfil} />
++                            <PrivateRoute path="/perfil" component={Perfil}/>
+ 
+-              <PrivateRoute exact path="/perfis" component={TinderCards} />
++                            <PrivateRoute exact path="/perfis" component={TinderCards}/>
+ 
+-              <Route path="/" component={Login} />
+-            </Switch>
+-          </BrowserRouter>
+-        </FirebaseAuthProvider>
+-      </FirestoreProvider>
+-    </div>
+-  );
++                            <Route path="/" component={Login}/>
++                        </Switch>
++                    </BrowserRouter>
++                </FirebaseAuthProvider>
++            </FirestoreProvider>
++        </div>
++    );
+ }
+ 
+ export default App;
+Index: src/containers/Login/Login.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, { useState } from \"react\";\nimport logo from \"../../assets/img/logo.png\";\nimport \"./Login.css\";\nimport TextField from \"@material-ui/core/TextField\";\nimport { Link } from \"react-router-dom\";\nimport Button from \"@material-ui/core/Button\";\nimport firebase from \"firebase/app\";\nimport { useHistory } from \"react-router-dom\";\n\nfunction Login(props) {\n  const [email, setEmail] = useState(\"\")\n  const [password, setPassword] = useState(\"\")\n  const history = useHistory()\n\n  const handleSubmit = () => {\n    console.log(email);\n    firebase\n      .auth()\n      .signInWithEmailAndPassword(email, password)\n      .then((user) => {\n        if (user) {\n          localStorage.setItem(\"user_id\",user.uid);\n          history.push(\"/perfis\");\n        }\n      })\n      .catch((error) => {\n        var errorCode = error.code;\n        var errorMessage = error.message;\n        console.log(errorCode + \" - \" + errorMessage);\n      });\n  };\n\n  return (\n    <div className=\"login container\">\n      <img src={logo} alt=\"banginder\" />\n      <TextField\n        className=\"input\"\n        type=\"text\"\n        id=\"standard-basic\"\n        label=\"Digite seu email\"\n        onChange={(event) => setEmail(event.target.value)}\n      />\n      <TextField\n        className=\"input\"\n        type=\"password\"\n        id=\"standard-basic\"\n        label=\"Digite sua senha\"\n        onChange={(event) => setPassword(event.target.value)}\n      />\n      <Button className=\"button\" variant=\"outlined\" onClick={handleSubmit}>\n        Login\n      </Button>\n      <Button className=\"button\" variant=\"outlined\">\n        <Link className=\"link\" to=\"/perfis\">\n          Registrar\n        </Link>\n      </Button>\n    </div>\n  );\n}\nexport default Login;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/containers/Login/Login.jsx b/src/containers/Login/Login.jsx
+--- a/src/containers/Login/Login.jsx	(revision 7bce049c3ea2c5a50f5aea6659a95cf4147d87d0)
++++ b/src/containers/Login/Login.jsx	(date 1607626538409)
+@@ -1,61 +1,64 @@
+-import React, { useState } from "react";
++import React, {useState} from "react";
+ import logo from "../../assets/img/logo.png";
+ import "./Login.css";
+ import TextField from "@material-ui/core/TextField";
+-import { Link } from "react-router-dom";
++import {Link} from "react-router-dom";
+ import Button from "@material-ui/core/Button";
+ import firebase from "firebase/app";
+-import { useHistory } from "react-router-dom";
++import {useHistory} from "react-router-dom";
+ 
+ function Login(props) {
+-  const [email, setEmail] = useState("")
+-  const [password, setPassword] = useState("")
+-  const history = useHistory()
++    const [email, setEmail] = useState("")
++    const [password, setPassword] = useState("")
++    const history = useHistory()
+ 
+-  const handleSubmit = () => {
+-    console.log(email);
+-    firebase
+-      .auth()
+-      .signInWithEmailAndPassword(email, password)
+-      .then((user) => {
+-        if (user) {
+-          localStorage.setItem("user_id",user.uid);
+-          history.push("/perfis");
+-        }
+-      })
+-      .catch((error) => {
+-        var errorCode = error.code;
+-        var errorMessage = error.message;
+-        console.log(errorCode + " - " + errorMessage);
+-      });
+-  };
++    const handleSubmit = () => {
++        console.log(email);
++        firebase
++            .auth()
++            .signInWithEmailAndPassword(email, password)
++            .then((user) => {
++                if (user) {
++                    localStorage.setItem("user_id", user.uid);
++                    history.push("/perfis");
++                }
++            })
++            .catch((error) => {
++                var errorCode = error.code;
++                var errorMessage = error.message;
++                console.log(errorCode + " - " + errorMessage);
++            });
++    };
+ 
+-  return (
+-    <div className="login container">
+-      <img src={logo} alt="banginder" />
+-      <TextField
+-        className="input"
+-        type="text"
+-        id="standard-basic"
+-        label="Digite seu email"
+-        onChange={(event) => setEmail(event.target.value)}
+-      />
+-      <TextField
+-        className="input"
+-        type="password"
+-        id="standard-basic"
+-        label="Digite sua senha"
+-        onChange={(event) => setPassword(event.target.value)}
+-      />
+-      <Button className="button" variant="outlined" onClick={handleSubmit}>
+-        Login
+-      </Button>
+-      <Button className="button" variant="outlined">
+-        <Link className="link" to="/perfis">
+-          Registrar
+-        </Link>
+-      </Button>
+-    </div>
+-  );
++    return (
++        <div className={'Login'}>
++            <div className="container">
++                <img src={logo} alt="banginder"/>
++                <TextField
++                    className="input"
++                    type="text"
++                    id="standard-basic"
++                    label="Digite seu email"
++                    onChange={(event) => setEmail(event.target.value)}
++                />
++                <TextField
++                    className="input"
++                    type="password"
++                    id="standard-basic"
++                    label="Digite sua senha"
++                    onChange={(event) => setPassword(event.target.value)}
++                />
++                <Button className="button" variant="outlined" onClick={handleSubmit}>
++                    Login
++                </Button>
++                <Button className="button" variant="outlined">
++                    <Link className="link" to="/perfis">
++                        Registrar
++                    </Link>
++                </Button>
++            </div>
++        </div>
++    );
+ }
++
+ export default Login;
+Index: src/containers/Login/Login.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.login.container {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    margin: auto;\n}\n\n.login.container img {\n    width: 30%;\n}\n\n.login.input {\n    margin-top: 2%;\n    width: 50%;\n}\n\n.login.button {\n    margin-top: 3%;\n    width: 50%;\n    align-items: center;\n    border-width: 2%;\n}\n\n.login.button:hover {\n    background-color: #4a7ccf;\n}\n\n.login.link {\n    text-decoration: none;\n    color: black;\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/containers/Login/Login.css b/src/containers/Login/Login.css
+--- a/src/containers/Login/Login.css	(revision 7bce049c3ea2c5a50f5aea6659a95cf4147d87d0)
++++ b/src/containers/Login/Login.css	(date 1607626430111)
+@@ -1,4 +1,4 @@
+-.login.container {
++.login .container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+@@ -6,27 +6,27 @@
+     margin: auto;
+ }
+ 
+-.login.container img {
++.login .container img {
+     width: 30%;
+ }
+ 
+-.login.input {
++.login .input {
+     margin-top: 2%;
+     width: 50%;
+ }
+ 
+-.login.button {
++.login .button {
+     margin-top: 3%;
+     width: 50%;
+     align-items: center;
+     border-width: 2%;
+ }
+ 
+-.login.button:hover {
++.login .button:hover {
+     background-color: #4a7ccf;
+ }
+ 
+-.login.link {
++.login .link {
+     text-decoration: none;
+     color: black;
+ }
+\ No newline at end of file
+Index: .eslintcache
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[{\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/index.jsx\":\"1\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Registrar/Registrar.jsx\":\"2\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/ChatScreen/ChatScreen.jsx\":\"3\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/TinderCard/TinderCards.jsx\":\"4\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/App.jsx\":\"5\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Login/Login.jsx\":\"6\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/reportWebVitals.js\":\"7\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Chat/Chat.jsx\":\"8\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/SwipeButtons/SwipeButtons.jsx\":\"9\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/Header/Header.jsx\":\"10\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/ChatRow/ChatRow.jsx\":\"11\"},{\"size\":500,\"mtime\":1607612112347,\"results\":\"12\",\"hashOfConfig\":\"13\"},{\"size\":955,\"mtime\":1607612112347,\"results\":\"14\",\"hashOfConfig\":\"13\"},{\"size\":1569,\"mtime\":1607612112347,\"results\":\"15\",\"hashOfConfig\":\"13\"},{\"size\":1369,\"mtime\":1607612112347,\"results\":\"16\",\"hashOfConfig\":\"13\"},{\"size\":1884,\"mtime\":1607615427681,\"results\":\"17\",\"hashOfConfig\":\"13\"},{\"size\":1772,\"mtime\":1607616975555,\"results\":\"18\",\"hashOfConfig\":\"13\"},{\"size\":362,\"mtime\":1607612112347,\"results\":\"19\",\"hashOfConfig\":\"13\"},{\"size\":1337,\"mtime\":1607612112347,\"results\":\"20\",\"hashOfConfig\":\"13\"},{\"size\":1096,\"mtime\":1607612112347,\"results\":\"21\",\"hashOfConfig\":\"13\"},{\"size\":1087,\"mtime\":1607612112343,\"results\":\"22\",\"hashOfConfig\":\"13\"},{\"size\":624,\"mtime\":1607612112343,\"results\":\"23\",\"hashOfConfig\":\"13\"},{\"filePath\":\"24\",\"messages\":\"25\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"26\"},\"y6myno\",{\"filePath\":\"27\",\"messages\":\"28\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"29\",\"messages\":\"30\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"26\"},{\"filePath\":\"31\",\"messages\":\"32\",\"errorCount\":0,\"warningCount\":1,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"source\":\"33\",\"usedDeprecatedRules\":\"26\"},{\"filePath\":\"34\",\"messages\":\"35\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"36\",\"messages\":\"37\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"38\",\"messages\":\"39\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"40\",\"messages\":\"41\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"42\",\"messages\":\"43\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"44\",\"messages\":\"45\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"46\",\"messages\":\"47\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/index.jsx\",[],[\"48\",\"49\"],\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Registrar/Registrar.jsx\",[],\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/ChatScreen/ChatScreen.jsx\",[],\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/TinderCard/TinderCards.jsx\",[\"50\"],\"import React, { useState } from 'react'\\nimport TinderCard from 'react-tinder-card'\\nimport './TinderCard.css'\\n\\nfunction TinderCards() {\\n\\n    const [people, setPeople] = useState([\\n        {\\n            name: 'athena',\\n            photo: 'https://avatars3.githubusercontent.com/u/23267293?s=460&u=cb2237120aba2f1292658bd815effe0f0cb304a3&v=4'\\n        },\\n        {\\n            name: 'josy',\\n            photo: 'https://avatars2.githubusercontent.com/u/43102874?s=400&u=8030cb9021983e9ff6d5f4fb381072fde0265cb7&v=4'\\n        },\\n        {\\n            name: 'vito',\\n            photo: 'https://avatars1.githubusercontent.com/u/37223412?s=400&u=f92c051d32393da9d9a2d4e99e1bd4f118904c32&v=4'\\n        }\\n\\n    ]);\\n\\n    //setPeople([...people, 'athena', 'josy', 'vito'])\\n    return (\\n        <div>\\n            <div className=\\\"tinderContainer\\\">\\n\\n                {people.map(person => (\\n                    <TinderCard\\n                        className=\\\"swipe\\\"\\n                        key={person.name}\\n                        preventSwipe={['up', 'down']}\\n                    >\\n                        <div className=\\\"card\\\" style={{ backgroundImage: `url(${person.photo})` }}>\\n                            <h3>{person.name}</h3>\\n                        </div>\\n                    </TinderCard>\\n                ))}\\n            </div>\\n        </div>\\n    )\\n}\\n\\nexport default TinderCards\\n\",\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/App.jsx\",[],\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Login/Login.jsx\",[],\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/reportWebVitals.js\",[],\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Chat/Chat.jsx\",[],\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/SwipeButtons/SwipeButtons.jsx\",[],\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/Header/Header.jsx\",[],\"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/ChatRow/ChatRow.jsx\",[],{\"ruleId\":\"51\",\"replacedBy\":\"52\"},{\"ruleId\":\"53\",\"replacedBy\":\"54\"},{\"ruleId\":\"55\",\"severity\":1,\"message\":\"56\",\"line\":7,\"column\":20,\"nodeType\":\"57\",\"messageId\":\"58\",\"endLine\":7,\"endColumn\":29},\"no-native-reassign\",[\"59\"],\"no-negated-in-lhs\",[\"60\"],\"no-unused-vars\",\"'setPeople' is assigned a value but never used.\",\"Identifier\",\"unusedVar\",\"no-global-assign\",\"no-unsafe-negation\"]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.eslintcache b/.eslintcache
+--- a/.eslintcache	(revision 7bce049c3ea2c5a50f5aea6659a95cf4147d87d0)
++++ b/.eslintcache	(date 1607638989760)
+@@ -1,1 +1,1 @@
+-[{"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/index.jsx":"1","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Registrar/Registrar.jsx":"2","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/ChatScreen/ChatScreen.jsx":"3","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/TinderCard/TinderCards.jsx":"4","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/App.jsx":"5","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Login/Login.jsx":"6","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/reportWebVitals.js":"7","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Chat/Chat.jsx":"8","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/SwipeButtons/SwipeButtons.jsx":"9","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/Header/Header.jsx":"10","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/ChatRow/ChatRow.jsx":"11"},{"size":500,"mtime":1607612112347,"results":"12","hashOfConfig":"13"},{"size":955,"mtime":1607612112347,"results":"14","hashOfConfig":"13"},{"size":1569,"mtime":1607612112347,"results":"15","hashOfConfig":"13"},{"size":1369,"mtime":1607612112347,"results":"16","hashOfConfig":"13"},{"size":1884,"mtime":1607615427681,"results":"17","hashOfConfig":"13"},{"size":1772,"mtime":1607616975555,"results":"18","hashOfConfig":"13"},{"size":362,"mtime":1607612112347,"results":"19","hashOfConfig":"13"},{"size":1337,"mtime":1607612112347,"results":"20","hashOfConfig":"13"},{"size":1096,"mtime":1607612112347,"results":"21","hashOfConfig":"13"},{"size":1087,"mtime":1607612112343,"results":"22","hashOfConfig":"13"},{"size":624,"mtime":1607612112343,"results":"23","hashOfConfig":"13"},{"filePath":"24","messages":"25","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"26"},"y6myno",{"filePath":"27","messages":"28","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"29","messages":"30","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"26"},{"filePath":"31","messages":"32","errorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":"33","usedDeprecatedRules":"26"},{"filePath":"34","messages":"35","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"36","messages":"37","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"38","messages":"39","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"40","messages":"41","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"42","messages":"43","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"44","messages":"45","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"46","messages":"47","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/index.jsx",[],["48","49"],"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Registrar/Registrar.jsx",[],"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/ChatScreen/ChatScreen.jsx",[],"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/TinderCard/TinderCards.jsx",["50"],"import React, { useState } from 'react'\nimport TinderCard from 'react-tinder-card'\nimport './TinderCard.css'\n\nfunction TinderCards() {\n\n    const [people, setPeople] = useState([\n        {\n            name: 'athena',\n            photo: 'https://avatars3.githubusercontent.com/u/23267293?s=460&u=cb2237120aba2f1292658bd815effe0f0cb304a3&v=4'\n        },\n        {\n            name: 'josy',\n            photo: 'https://avatars2.githubusercontent.com/u/43102874?s=400&u=8030cb9021983e9ff6d5f4fb381072fde0265cb7&v=4'\n        },\n        {\n            name: 'vito',\n            photo: 'https://avatars1.githubusercontent.com/u/37223412?s=400&u=f92c051d32393da9d9a2d4e99e1bd4f118904c32&v=4'\n        }\n\n    ]);\n\n    //setPeople([...people, 'athena', 'josy', 'vito'])\n    return (\n        <div>\n            <div className=\"tinderContainer\">\n\n                {people.map(person => (\n                    <TinderCard\n                        className=\"swipe\"\n                        key={person.name}\n                        preventSwipe={['up', 'down']}\n                    >\n                        <div className=\"card\" style={{ backgroundImage: `url(${person.photo})` }}>\n                            <h3>{person.name}</h3>\n                        </div>\n                    </TinderCard>\n                ))}\n            </div>\n        </div>\n    )\n}\n\nexport default TinderCards\n","/home/zeneto/Documents/GitHub/banginder-web/banginder/src/App.jsx",[],"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Login/Login.jsx",[],"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/reportWebVitals.js",[],"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/containers/Chat/Chat.jsx",[],"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/SwipeButtons/SwipeButtons.jsx",[],"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/Header/Header.jsx",[],"/home/zeneto/Documents/GitHub/banginder-web/banginder/src/components/ChatRow/ChatRow.jsx",[],{"ruleId":"51","replacedBy":"52"},{"ruleId":"53","replacedBy":"54"},{"ruleId":"55","severity":1,"message":"56","line":7,"column":20,"nodeType":"57","messageId":"58","endLine":7,"endColumn":29},"no-native-reassign",["59"],"no-negated-in-lhs",["60"],"no-unused-vars","'setPeople' is assigned a value but never used.","Identifier","unusedVar","no-global-assign","no-unsafe-negation"]
+\ No newline at end of file
++[{"/home/vitor/Documents/Facu/PER/Web/banginder/src/App.jsx":"1","/home/vitor/Documents/Facu/PER/Web/banginder/src/components/Header/Header.jsx":"2","/home/vitor/Documents/Facu/PER/Web/banginder/src/components/SwipeButtons/SwipeButtons.jsx":"3","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Perfil/Perfil.jsx":"4","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/ChatScreen/ChatScreen.jsx":"5","/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx":"6","/home/vitor/Documents/Facu/PER/Web/banginder/src/auth.jsx":"7","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx":"8"},{"size":2568,"mtime":1607638985332,"results":"9","hashOfConfig":"10"},{"size":1087,"mtime":1607555401614,"results":"11","hashOfConfig":"10"},{"size":1096,"mtime":1607555401614,"results":"12","hashOfConfig":"10"},{"size":373,"mtime":1607626305314,"results":"13","hashOfConfig":"10"},{"size":1714,"mtime":1607626305314,"results":"14","hashOfConfig":"10"},{"size":221,"mtime":1607626305314,"results":"15","hashOfConfig":"10"},{"size":87,"mtime":1607626305314,"results":"16","hashOfConfig":"10"},{"size":1595,"mtime":1607626305314,"results":"17","hashOfConfig":"10"},{"filePath":"18","messages":"19","errorCount":0,"warningCount":2,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},"1svzebt",{"filePath":"20","messages":"21","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"22"},{"filePath":"23","messages":"24","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"25","messages":"26","errorCount":0,"warningCount":4,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"27","messages":"28","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"29"},{"filePath":"30","messages":"31","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"22"},{"filePath":"32","messages":"33","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"29"},{"filePath":"34","messages":"35","errorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},"/home/vitor/Documents/Facu/PER/Web/banginder/src/App.jsx",["36","37"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/Header/Header.jsx",[],["38","39"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/SwipeButtons/SwipeButtons.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Perfil/Perfil.jsx",["40","41","42","43"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/ChatScreen/ChatScreen.jsx",[],["44","45"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/auth.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx",["46"],{"ruleId":"47","severity":1,"message":"48","line":4,"column":8,"nodeType":"49","messageId":"50","endLine":4,"endColumn":14},{"ruleId":"47","severity":1,"message":"51","line":9,"column":8,"nodeType":"49","messageId":"50","endLine":9,"endColumn":20},{"ruleId":"52","replacedBy":"53"},{"ruleId":"54","replacedBy":"55"},{"ruleId":"47","severity":1,"message":"48","line":1,"column":8,"nodeType":"49","messageId":"50","endLine":1,"endColumn":14},{"ruleId":"47","severity":1,"message":"56","line":2,"column":8,"nodeType":"49","messageId":"50","endLine":2,"endColumn":19},{"ruleId":"47","severity":1,"message":"51","line":3,"column":8,"nodeType":"49","messageId":"50","endLine":3,"endColumn":20},{"ruleId":"47","severity":1,"message":"57","line":6,"column":17,"nodeType":"49","messageId":"50","endLine":6,"endColumn":25},{"ruleId":"52","replacedBy":"58"},{"ruleId":"54","replacedBy":"59"},{"ruleId":"47","severity":1,"message":"60","line":9,"column":20,"nodeType":"49","messageId":"50","endLine":9,"endColumn":29},"no-unused-vars","'Header' is defined but never used.","Identifier","unusedVar","'SwipeButtons' is defined but never used.","no-native-reassign",["61"],"no-negated-in-lhs",["62"],"'TinderCards' is defined but never used.","'useState' is defined but never used.",["61"],["62"],"'setPeople' is assigned a value but never used.","no-global-assign","no-unsafe-negation"]
+\ No newline at end of file

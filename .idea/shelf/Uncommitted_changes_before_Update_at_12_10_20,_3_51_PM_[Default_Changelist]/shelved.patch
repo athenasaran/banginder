@@ -1,0 +1,187 @@
+Index: src/App.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from \"react\";\nimport { BrowserRouter as Router, Switch, Route } from \"react-router-dom\";\nimport \"./App.css\";\nimport Header from \"./components/Header/Header\";\nimport Login from \"./containers/Login/Login\";\nimport TinderCards from \"./containers/TinderCard/TinderCards\";\nimport Registrar from \"./containers/Registrar/Registrar\"\nimport SwipeButtons from './components/SwipeButtons/SwipeButtons';\nimport Chat from \"./containers/Chat/Chat\";\nimport ChatScreen from './containers/ChatScreen/ChatScreen'\nfunction App() {\n  return (\n    <div className=\"App\">\n\n      <Router>\n        <Switch>\n\n          <Route path=\"/chat/:person\">\n            <Header backButton=\"/chat\" />\n            <ChatScreen />\n          </Route>\n\n          <Route path=\"/chat\">\n            <Header backButton=\"/perfis\" />\n            <Chat />\n          </Route>\n\n          <Route path=\"/registrar\">\n            <Registrar />\n          </Route>\n\n          <Route path=\"/perfil\">\n            <h1>Perfil</h1>\n          </Route>\n\n          <Route path=\"/perfis\">\n            <Header />\n            <TinderCards />\n            <SwipeButtons />\n          </Route>\n\n          <Route path=\"/\">\n            <Login />\n          </Route>\n        </Switch>\n      </Router>\n    </div>\n  );\n}\n\nexport default App;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.jsx b/src/App.jsx
+--- a/src/App.jsx	(revision 905ff42146aad9649b6b1efe797a0b1c104d353d)
++++ b/src/App.jsx	(date 1607559955037)
+@@ -8,6 +8,9 @@
+ import SwipeButtons from './components/SwipeButtons/SwipeButtons';
+ import Chat from "./containers/Chat/Chat";
+ import ChatScreen from './containers/ChatScreen/ChatScreen'
++
++
++
+ function App() {
+   return (
+     <div className="App">
+Index: src/index.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\nimport ReactDOM from 'react-dom';\nimport './index.css';\nimport App from './App';\nimport reportWebVitals from './reportWebVitals';\n\nReactDOM.render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>,\n  document.getElementById('root')\n);\n\n// If you want to start measuring performance in your app, pass a function\n// to log results (for example: reportWebVitals(console.log))\n// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals\nreportWebVitals();\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/index.jsx b/src/index.jsx
+--- a/src/index.jsx	(revision 905ff42146aad9649b6b1efe797a0b1c104d353d)
++++ b/src/index.jsx	(date 1607556359197)
+@@ -2,7 +2,6 @@
+ import ReactDOM from 'react-dom';
+ import './index.css';
+ import App from './App';
+-import reportWebVitals from './reportWebVitals';
+ 
+ ReactDOM.render(
+   <React.StrictMode>
+@@ -11,7 +10,3 @@
+   document.getElementById('root')
+ );
+ 
+-// If you want to start measuring performance in your app, pass a function
+-// to log results (for example: reportWebVitals(console.log))
+-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+-reportWebVitals();
+Index: src/containers/Login/Login.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, { Component } from 'react'\nimport logo from \"../../assets/img/logo.png\";\nimport \"./Login.css\"\nimport TextField from '@material-ui/core/TextField';\nimport { Link } from 'react-router-dom';\nimport Button from '@material-ui/core/Button';\n\nclass Login extends Component {\n    state = {\n        email: \"\",\n        password: \"\"\n    };\n\n    render() {\n        return (\n            <div className=\"container\">\n                <img src={logo} alt=\"banginder\" />\n                <TextField className=\"input\" type=\"text\" id=\"standard-basic\" label=\"Digite seu email\" />\n                <TextField className=\"input\" type=\"password\" id=\"standard-basic\" label=\"Digite sua senha\" />\n                <Button className=\"button\" variant=\"outlined\">\n                    <Link className=\"link\" to=\"/perfis\">Login</Link>\n                </Button>\n                <Button className=\"button\" variant=\"outlined\">\n                    <Link className=\"link\" to=\"/registrar\">Registrar</Link>\n                </Button>\n\n\n            </div>\n        )\n    }\n\n}\nexport default Login;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/containers/Login/Login.jsx b/src/containers/Login/Login.jsx
+--- a/src/containers/Login/Login.jsx	(revision 905ff42146aad9649b6b1efe797a0b1c104d353d)
++++ b/src/containers/Login/Login.jsx	(date 1607559931041)
+@@ -1,8 +1,8 @@
+-import React, { Component } from 'react'
++import React, {Component} from 'react'
+ import logo from "../../assets/img/logo.png";
+ import "./Login.css"
+ import TextField from '@material-ui/core/TextField';
+-import { Link } from 'react-router-dom';
++import {Link} from 'react-router-dom';
+ import Button from '@material-ui/core/Button';
+ 
+ class Login extends Component {
+@@ -13,21 +13,24 @@
+ 
+     render() {
+         return (
+-            <div className="container">
+-                <img src={logo} alt="banginder" />
+-                <TextField className="input" type="text" id="standard-basic" label="Digite seu email" />
+-                <TextField className="input" type="password" id="standard-basic" label="Digite sua senha" />
+-                <Button className="button" variant="outlined">
+-                    <Link className="link" to="/perfis">Login</Link>
+-                </Button>
+-                <Button className="button" variant="outlined">
+-                    <Link className="link" to="/registrar">Registrar</Link>
+-                </Button>
++            <div className={"login"}>
++                <div className="container">
++                    <img src={logo} alt="banginder"/>
++                    <TextField className="input" type="text" id="standard-basic" label="Digite seu email"/>
++                    <TextField className="input" type="password" id="standard-basic" label="Digite sua senha"/>
++                    <Button className="button" variant="outlined">
++                        <Link className="link" to="/perfis">Login</Link>
++                    </Button>
++                    <Button className="button" variant="outlined">
++                        <Link className="link" to="/registrar">Registrar</Link>
++                    </Button>
+ 
+ 
++                </div>
+             </div>
+         )
+     }
+ 
+ }
++
+ export default Login;
+Index: src/reportWebVitals.js
+===================================================================
+diff --git a/src/reportWebVitals.js b/src/reportWebVitals.js
+deleted file mode 100644
+--- a/src/reportWebVitals.js	(revision 905ff42146aad9649b6b1efe797a0b1c104d353d)
++++ /dev/null	(revision 905ff42146aad9649b6b1efe797a0b1c104d353d)
+@@ -1,13 +0,0 @@
+-const reportWebVitals = onPerfEntry => {
+-  if (onPerfEntry && onPerfEntry instanceof Function) {
+-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+-      getCLS(onPerfEntry);
+-      getFID(onPerfEntry);
+-      getFCP(onPerfEntry);
+-      getLCP(onPerfEntry);
+-      getTTFB(onPerfEntry);
+-    });
+-  }
+-};
+-
+-export default reportWebVitals;
+Index: src/containers/Login/Login.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.container {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    margin: auto;\n}\n\n.container img {\n    width: 30%;\n}\n\n.input {\n    margin-top: 2%;\n    width: 50%;\n}\n\n.button {\n    margin-top: 3%;\n    width: 50%;\n    align-items: center;\n    border-width: 2%;\n}\n\n.button:hover {\n    background-color: #4a7ccf;\n}\n\n.link {\n    text-decoration: none;\n    color: black;\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/containers/Login/Login.css b/src/containers/Login/Login.css
+--- a/src/containers/Login/Login.css	(revision 905ff42146aad9649b6b1efe797a0b1c104d353d)
++++ b/src/containers/Login/Login.css	(date 1607559931033)
+@@ -1,4 +1,4 @@
+-.container {
++.login .container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+@@ -6,27 +6,27 @@
+     margin: auto;
+ }
+ 
+-.container img {
++.login .container img {
+     width: 30%;
+ }
+ 
+-.input {
++.login .input {
+     margin-top: 2%;
+     width: 50%;
+ }
+ 
+-.button {
++.login .button {
+     margin-top: 3%;
+     width: 50%;
+     align-items: center;
+     border-width: 2%;
+ }
+ 
+-.button:hover {
++.login .button:hover {
+     background-color: #4a7ccf;
+ }
+ 
+-.link {
++.login .link {
+     text-decoration: none;
+     color: black;
+ }
+\ No newline at end of file
+Index: .eslintcache
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[{\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/App.jsx\":\"1\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Login/Login.jsx\":\"2\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Registrar/Registrar.jsx\":\"3\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/reportWebVitals.js\":\"4\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/SwipeButtons/SwipeButtons.jsx\":\"5\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/index.jsx\":\"6\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/TinderCard/TinderCards.jsx\":\"7\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/Header/Header.jsx\":\"8\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Chat/Chat.jsx\":\"9\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/ChatRow/ChatRow.jsx\":\"10\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/ChatScreen/ChatScreen.jsx\":\"11\"},{\"size\":1276,\"mtime\":1607095883771,\"results\":\"12\",\"hashOfConfig\":\"13\"},{\"size\":1066,\"mtime\":1607087909929,\"results\":\"14\",\"hashOfConfig\":\"13\"},{\"size\":955,\"mtime\":1607087246088,\"results\":\"15\",\"hashOfConfig\":\"13\"},{\"size\":362,\"mtime\":1606417883890,\"results\":\"16\",\"hashOfConfig\":\"13\"},{\"size\":1096,\"mtime\":1607089971935,\"results\":\"17\",\"hashOfConfig\":\"13\"},{\"size\":500,\"mtime\":1606930012856,\"results\":\"18\",\"hashOfConfig\":\"13\"},{\"size\":1369,\"mtime\":1606930018775,\"results\":\"19\",\"hashOfConfig\":\"13\"},{\"size\":1087,\"mtime\":1607091565436,\"results\":\"20\",\"hashOfConfig\":\"13\"},{\"size\":1337,\"mtime\":1607092976365,\"results\":\"21\",\"hashOfConfig\":\"13\"},{\"size\":624,\"mtime\":1607095090643,\"results\":\"22\",\"hashOfConfig\":\"13\"},{\"size\":1569,\"mtime\":1607095996585,\"results\":\"23\",\"hashOfConfig\":\"13\"},{\"filePath\":\"24\",\"messages\":\"25\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},\"mulzns\",{\"filePath\":\"26\",\"messages\":\"27\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"28\"},{\"filePath\":\"29\",\"messages\":\"30\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"28\"},{\"filePath\":\"31\",\"messages\":\"32\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"33\"},{\"filePath\":\"34\",\"messages\":\"35\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"36\"},{\"filePath\":\"37\",\"messages\":\"38\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"28\"},{\"filePath\":\"39\",\"messages\":\"40\",\"errorCount\":0,\"warningCount\":1,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"source\":\"41\",\"usedDeprecatedRules\":\"36\"},{\"filePath\":\"42\",\"messages\":\"43\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"28\"},{\"filePath\":\"44\",\"messages\":\"45\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"46\",\"messages\":\"47\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"48\",\"messages\":\"49\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/App.jsx\",[],\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Login/Login.jsx\",[],[\"50\",\"51\"],\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Registrar/Registrar.jsx\",[],\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/reportWebVitals.js\",[],[\"52\",\"53\"],\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/SwipeButtons/SwipeButtons.jsx\",[],[\"54\",\"55\"],\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/index.jsx\",[],\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/TinderCard/TinderCards.jsx\",[\"56\"],\"import React, { useState } from 'react'\\nimport TinderCard from 'react-tinder-card'\\nimport './TinderCard.css'\\n\\nfunction TinderCards() {\\n\\n    const [people, setPeople] = useState([\\n        {\\n            name: 'athena',\\n            photo: 'https://avatars3.githubusercontent.com/u/23267293?s=460&u=cb2237120aba2f1292658bd815effe0f0cb304a3&v=4'\\n        },\\n        {\\n            name: 'josy',\\n            photo: 'https://avatars2.githubusercontent.com/u/43102874?s=400&u=8030cb9021983e9ff6d5f4fb381072fde0265cb7&v=4'\\n        },\\n        {\\n            name: 'vito',\\n            photo: 'https://avatars1.githubusercontent.com/u/37223412?s=400&u=f92c051d32393da9d9a2d4e99e1bd4f118904c32&v=4'\\n        }\\n\\n    ]);\\n\\n    //setPeople([...people, 'athena', 'josy', 'vito'])\\n    return (\\n        <div>\\n            <div className=\\\"tinderContainer\\\">\\n\\n                {people.map(person => (\\n                    <TinderCard\\n                        className=\\\"swipe\\\"\\n                        key={person.name}\\n                        preventSwipe={['up', 'down']}\\n                    >\\n                        <div className=\\\"card\\\" style={{ backgroundImage: `url(${person.photo})` }}>\\n                            <h3>{person.name}</h3>\\n                        </div>\\n                    </TinderCard>\\n                ))}\\n            </div>\\n        </div>\\n    )\\n}\\n\\nexport default TinderCards\\n\",\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/Header/Header.jsx\",[],\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Chat/Chat.jsx\",[],\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/ChatRow/ChatRow.jsx\",[],\"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/ChatScreen/ChatScreen.jsx\",[],{\"ruleId\":\"57\",\"replacedBy\":\"58\"},{\"ruleId\":\"59\",\"replacedBy\":\"60\"},{\"ruleId\":\"57\",\"replacedBy\":\"61\"},{\"ruleId\":\"59\",\"replacedBy\":\"62\"},{\"ruleId\":\"57\",\"replacedBy\":\"63\"},{\"ruleId\":\"59\",\"replacedBy\":\"64\"},{\"ruleId\":\"65\",\"severity\":1,\"message\":\"66\",\"line\":7,\"column\":20,\"nodeType\":\"67\",\"messageId\":\"68\",\"endLine\":7,\"endColumn\":29},\"no-native-reassign\",[\"69\"],\"no-negated-in-lhs\",[\"70\"],[\"69\"],[\"70\"],[\"69\"],[\"70\"],\"no-unused-vars\",\"'setPeople' is assigned a value but never used.\",\"Identifier\",\"unusedVar\",\"no-global-assign\",\"no-unsafe-negation\"]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.eslintcache b/.eslintcache
+--- a/.eslintcache	(revision 905ff42146aad9649b6b1efe797a0b1c104d353d)
++++ b/.eslintcache	(date 1607559934005)
+@@ -1,1 +1,1 @@
+-[{"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/App.jsx":"1","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Login/Login.jsx":"2","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Registrar/Registrar.jsx":"3","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/reportWebVitals.js":"4","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/SwipeButtons/SwipeButtons.jsx":"5","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/index.jsx":"6","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/TinderCard/TinderCards.jsx":"7","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/Header/Header.jsx":"8","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Chat/Chat.jsx":"9","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/ChatRow/ChatRow.jsx":"10","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/ChatScreen/ChatScreen.jsx":"11"},{"size":1276,"mtime":1607095883771,"results":"12","hashOfConfig":"13"},{"size":1066,"mtime":1607087909929,"results":"14","hashOfConfig":"13"},{"size":955,"mtime":1607087246088,"results":"15","hashOfConfig":"13"},{"size":362,"mtime":1606417883890,"results":"16","hashOfConfig":"13"},{"size":1096,"mtime":1607089971935,"results":"17","hashOfConfig":"13"},{"size":500,"mtime":1606930012856,"results":"18","hashOfConfig":"13"},{"size":1369,"mtime":1606930018775,"results":"19","hashOfConfig":"13"},{"size":1087,"mtime":1607091565436,"results":"20","hashOfConfig":"13"},{"size":1337,"mtime":1607092976365,"results":"21","hashOfConfig":"13"},{"size":624,"mtime":1607095090643,"results":"22","hashOfConfig":"13"},{"size":1569,"mtime":1607095996585,"results":"23","hashOfConfig":"13"},{"filePath":"24","messages":"25","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"mulzns",{"filePath":"26","messages":"27","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"28"},{"filePath":"29","messages":"30","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"28"},{"filePath":"31","messages":"32","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"33"},{"filePath":"34","messages":"35","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"36"},{"filePath":"37","messages":"38","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"28"},{"filePath":"39","messages":"40","errorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":"41","usedDeprecatedRules":"36"},{"filePath":"42","messages":"43","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"28"},{"filePath":"44","messages":"45","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"46","messages":"47","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"48","messages":"49","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/App.jsx",[],"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Login/Login.jsx",[],["50","51"],"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Registrar/Registrar.jsx",[],"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/reportWebVitals.js",[],["52","53"],"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/SwipeButtons/SwipeButtons.jsx",[],["54","55"],"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/index.jsx",[],"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/TinderCard/TinderCards.jsx",["56"],"import React, { useState } from 'react'\nimport TinderCard from 'react-tinder-card'\nimport './TinderCard.css'\n\nfunction TinderCards() {\n\n    const [people, setPeople] = useState([\n        {\n            name: 'athena',\n            photo: 'https://avatars3.githubusercontent.com/u/23267293?s=460&u=cb2237120aba2f1292658bd815effe0f0cb304a3&v=4'\n        },\n        {\n            name: 'josy',\n            photo: 'https://avatars2.githubusercontent.com/u/43102874?s=400&u=8030cb9021983e9ff6d5f4fb381072fde0265cb7&v=4'\n        },\n        {\n            name: 'vito',\n            photo: 'https://avatars1.githubusercontent.com/u/37223412?s=400&u=f92c051d32393da9d9a2d4e99e1bd4f118904c32&v=4'\n        }\n\n    ]);\n\n    //setPeople([...people, 'athena', 'josy', 'vito'])\n    return (\n        <div>\n            <div className=\"tinderContainer\">\n\n                {people.map(person => (\n                    <TinderCard\n                        className=\"swipe\"\n                        key={person.name}\n                        preventSwipe={['up', 'down']}\n                    >\n                        <div className=\"card\" style={{ backgroundImage: `url(${person.photo})` }}>\n                            <h3>{person.name}</h3>\n                        </div>\n                    </TinderCard>\n                ))}\n            </div>\n        </div>\n    )\n}\n\nexport default TinderCards\n","/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/Header/Header.jsx",[],"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/Chat/Chat.jsx",[],"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/components/ChatRow/ChatRow.jsx",[],"/home/athena/Vídeos/Ciência da Computação/PER/CCF 321F - PROJETO DE SISTEMAS PARA WEB /banginder/src/containers/ChatScreen/ChatScreen.jsx",[],{"ruleId":"57","replacedBy":"58"},{"ruleId":"59","replacedBy":"60"},{"ruleId":"57","replacedBy":"61"},{"ruleId":"59","replacedBy":"62"},{"ruleId":"57","replacedBy":"63"},{"ruleId":"59","replacedBy":"64"},{"ruleId":"65","severity":1,"message":"66","line":7,"column":20,"nodeType":"67","messageId":"68","endLine":7,"endColumn":29},"no-native-reassign",["69"],"no-negated-in-lhs",["70"],["69"],["70"],["69"],["70"],"no-unused-vars","'setPeople' is assigned a value but never used.","Identifier","unusedVar","no-global-assign","no-unsafe-negation"]
+\ No newline at end of file
++[{"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx":"1","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Chat/Chat.jsx":"2","/home/vitor/Documents/Facu/PER/Web/banginder/src/components/ChatRow/ChatRow.jsx":"3","/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx":"4","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Login/Login.jsx":"5"},{"size":1369,"mtime":1607555401614,"results":"6","hashOfConfig":"7"},{"size":1337,"mtime":1607555401614,"results":"8","hashOfConfig":"7"},{"size":624,"mtime":1607555401614,"results":"9","hashOfConfig":"7"},{"size":220,"mtime":1607556359198,"results":"10","hashOfConfig":"7"},{"size":1161,"mtime":1607559931041,"results":"11","hashOfConfig":"7"},{"filePath":"12","messages":"13","errorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},"1svzebt",{"filePath":"14","messages":"15","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"16","messages":"17","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"18","messages":"19","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"20","messages":"21","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx",["22"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Chat/Chat.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/ChatRow/ChatRow.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Login/Login.jsx",[],{"ruleId":"23","severity":1,"message":"24","line":7,"column":20,"nodeType":"25","messageId":"26","endLine":7,"endColumn":29},"no-unused-vars","'setPeople' is assigned a value but never used.","Identifier","unusedVar"]
+\ No newline at end of file

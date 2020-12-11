@@ -1,0 +1,327 @@
+Index: src/containers/TinderCard/TinderCard.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.card {\n    position: relative;\n    width: 500px;\n    padding: 2%;\n    max-width: 85vw;\n    height: 58vh;\n    border-radius: 20px;\n    background-size: cover;\n    background-position: center;\n    box-shadow: 0px 15px 50px 0 rgba(0, 0, 0, 0.3);\n}\n\n.card>h3 {\n    position: absolute;\n    bottom: 1%;\n    color: white;\n    font-size: 30px;\n}\n\n.tinderContainer {\n    display: flex;\n    justify-content: center;\n    margin-top: 3vh;\n}\n\n\n.swipe {\n    position: absolute;\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/containers/TinderCard/TinderCard.css b/src/containers/TinderCard/TinderCard.css
+--- a/src/containers/TinderCard/TinderCard.css	(revision 6d16d19b018661b2047526f613167801b8013b8e)
++++ b/src/containers/TinderCard/TinderCard.css	(date 1607647287807)
+@@ -1,16 +1,37 @@
+ .card {
+     position: relative;
+-    width: 500px;
+-    padding: 2%;
++    width: 350px;
++    /*padding: 2%;*/
+     max-width: 85vw;
+-    height: 58vh;
++    height: 75vh;
+     border-radius: 20px;
+     background-size: cover;
++    background: white center;
++    box-shadow: 0px 15px 50px 0 rgba(0, 0, 0, 0.3);
++}
++
++.card-image {
++    width: 350px;
++    display: flex;
++    align-items: flex-end;
++    justify-content: flex-start;
++    border-radius: 20px 20px 0 0;
++    height: 10rem;
++    background-repeat: no-repeat;
+     background-position: center;
+-    box-shadow: 0px 15px 50px 0 rgba(0, 0, 0, 0.3);
++    background-size: cover;
++}
++
++.card-image h3{
++    padding: 1rem;
++    color: white;
++}
++
++.card .infos{
++    padding: 1rem;
+ }
+ 
+-.card>h3 {
++.card > h3 {
+     position: absolute;
+     bottom: 1%;
+     color: white;
+Index: src/containers/TinderCard/TinderCards.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, { useState, useEffect } from \"react\";\nimport SwipeButtons from \"../../components/SwipeButtons/SwipeButtons\";\nimport Header from \"../../components/Header/Header\";\nimport TinderCard from \"react-tinder-card\";\nimport firebase from \"firebase/app\";\nimport \"./TinderCard.css\";\n\nfunction TinderCards() {\n  const [people, setPeople] = useState([\n  ]);\n  const userUid = localStorage.getItem(\"user_id\");\n  \n  const handleCardLeft = (direction) => {\n    const enemyUid = people[0].uid;\n    if (direction == \"left\") {\n      console.log(people[0].name);\n      firebase\n        .firestore()\n        .collection(\"Hate\")\n        .doc(userUid)\n        .collection(\"HateList\")\n        .doc(enemyUid)\n        .set({\n          message: [\n            {\n              text: \"\",\n              date: \"\",\n            },\n          ],\n        });\n    }\n    setPeople((people) => [...people.slice(1)]);\n  };\n  const [loading, setLoading] = useState(false);\n  useEffect(() => {\n    const firestore = firebase.firestore();\n    setLoading(true);\n    firestore\n      .collection(\"registerInfo\")\n      .get()\n      .then((snap) => {\n        const hateList = snap.docs\n          .map((e) => e.id)\n          .filter((id) => id !== userUid);\n        firestore\n          .collection(\"Hate\")\n          .doc(userUid)\n          .collection(\"HateList\")\n          .get()\n          .then((snap) => {\n            const ids = snap.docs.map((e) => e.id);\n            hateList\n              .filter((s) => !ids.includes(s))\n              .forEach((uid) =>\n                firestore\n                  .collection(\"registerInfo\")\n                  .doc(uid)\n                  .get()\n                  .then((snap) => {\n                    const data = snap.data();\n                    setPeople((people) => [\n                      {\n                        uid: data.uid,\n                        url: data.url,\n                        bio: data.bio,\n                        dislikes: data.dislikes,\n                        likes: data.likes,\n                        name: data.name + \" \" + data.surname,\n                      },\n                      ...people,\n                    ]);\n                  })\n              )\n              setLoading(false);\n          });\n      })\n      .catch(() => setLoading(false));\n      return () => {\n        setPeople([])\n      }\n  }, []);\n  //setPeople([...people, 'athena', 'josy', 'vito'])\n  if (loading) {\n    return <div>Carregando...</div>;\n  } else\n    return (\n      <React.Fragment>\n        <Header />\n        <div>\n          <div className=\"tinderContainer\">\n            {people\n              .slice(0)\n              .reverse()\n              .map((person) => (\n                <TinderCard\n                  onCardLeftScreen={handleCardLeft}\n                  className=\"swipe\"\n                  key={person.uid}\n                  preventSwipe={[\"up\", \"down\"]}\n                >\n                  <div\n                    className=\"card\"\n                    style={{ backgroundImage: `linear-gradient(rgb(0 0 0 / 0%), rgb(102 65 121 / 52%)),url(${person.url})` }}\n                    // linear-gradient(rgba(0, 0, 0, 0), rgb(74 65 121 / 52%))\n                  >\n                    <h3>{person.name}</h3>\n                  </div>\n                </TinderCard>\n              ))}\n          </div>\n        </div>\n        <SwipeButtons />\n      </React.Fragment>\n    );\n}\n\nexport default TinderCards;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/containers/TinderCard/TinderCards.jsx b/src/containers/TinderCard/TinderCards.jsx
+--- a/src/containers/TinderCard/TinderCards.jsx	(revision 6d16d19b018661b2047526f613167801b8013b8e)
++++ b/src/containers/TinderCard/TinderCards.jsx	(date 1607652038498)
+@@ -1,4 +1,4 @@
+-import React, { useState, useEffect } from "react";
++import React, {useState, useEffect} from "react";
+ import SwipeButtons from "../../components/SwipeButtons/SwipeButtons";
+ import Header from "../../components/Header/Header";
+ import TinderCard from "react-tinder-card";
+@@ -6,112 +6,136 @@
+ import "./TinderCard.css";
+ 
+ function TinderCards() {
+-  const [people, setPeople] = useState([
+-  ]);
+-  const userUid = localStorage.getItem("user_id");
+-  
+-  const handleCardLeft = (direction) => {
+-    const enemyUid = people[0].uid;
+-    if (direction == "left") {
+-      console.log(people[0].name);
+-      firebase
+-        .firestore()
+-        .collection("Hate")
+-        .doc(userUid)
+-        .collection("HateList")
+-        .doc(enemyUid)
+-        .set({
+-          message: [
+-            {
+-              text: "",
+-              date: "",
+-            },
+-          ],
+-        });
+-    }
+-    setPeople((people) => [...people.slice(1)]);
+-  };
+-  const [loading, setLoading] = useState(false);
+-  useEffect(() => {
+-    const firestore = firebase.firestore();
+-    setLoading(true);
+-    firestore
+-      .collection("registerInfo")
+-      .get()
+-      .then((snap) => {
+-        const hateList = snap.docs
+-          .map((e) => e.id)
+-          .filter((id) => id !== userUid);
+-        firestore
+-          .collection("Hate")
+-          .doc(userUid)
+-          .collection("HateList")
+-          .get()
+-          .then((snap) => {
+-            const ids = snap.docs.map((e) => e.id);
+-            hateList
+-              .filter((s) => !ids.includes(s))
+-              .forEach((uid) =>
+-                firestore
+-                  .collection("registerInfo")
+-                  .doc(uid)
+-                  .get()
+-                  .then((snap) => {
+-                    const data = snap.data();
+-                    setPeople((people) => [
+-                      {
+-                        uid: data.uid,
+-                        url: data.url,
+-                        bio: data.bio,
+-                        dislikes: data.dislikes,
+-                        likes: data.likes,
+-                        name: data.name + " " + data.surname,
+-                      },
+-                      ...people,
+-                    ]);
+-                  })
+-              )
+-              setLoading(false);
+-          });
+-      })
+-      .catch(() => setLoading(false));
+-      return () => {
+-        setPeople([])
+-      }
+-  }, []);
+-  //setPeople([...people, 'athena', 'josy', 'vito'])
+-  if (loading) {
+-    return <div>Carregando...</div>;
+-  } else
+-    return (
+-      <React.Fragment>
+-        <Header />
+-        <div>
+-          <div className="tinderContainer">
+-            {people
+-              .slice(0)
+-              .reverse()
+-              .map((person) => (
+-                <TinderCard
+-                  onCardLeftScreen={handleCardLeft}
+-                  className="swipe"
+-                  key={person.uid}
+-                  preventSwipe={["up", "down"]}
+-                >
+-                  <div
+-                    className="card"
+-                    style={{ backgroundImage: `linear-gradient(rgb(0 0 0 / 0%), rgb(102 65 121 / 52%)),url(${person.url})` }}
+-                    // linear-gradient(rgba(0, 0, 0, 0), rgb(74 65 121 / 52%))
+-                  >
+-                    <h3>{person.name}</h3>
+-                  </div>
+-                </TinderCard>
+-              ))}
+-          </div>
+-        </div>
+-        <SwipeButtons />
+-      </React.Fragment>
+-    );
++    const [people, setPeople] = useState([]);
++    const userUid = localStorage.getItem("user_id")
++
++    function getAge(dateString) {
++        const today = new Date();
++        const birthDate = new Date(dateString);
++        let age = today.getFullYear() - birthDate.getFullYear();
++        const m = today.getMonth() - birthDate.getMonth();
++        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
++            age--;
++        }
++        return age;
++    }
++
++    const handleCardLeft = (direction) => {
++        const enemyUid = people[0].uid;
++        if (direction == "left") {
++            console.log(people[0].name);
++            firebase
++                .firestore()
++                .collection("Hate")
++                .doc(userUid)
++                .collection("HateList")
++                .doc(enemyUid)
++                .set({
++                    message: [
++                        {
++                            text: "",
++                            date: "",
++                        },
++                    ],
++                });
++        }
++        setPeople((people) => [...people.slice(1)]);
++    };
++    const [loading, setLoading] = useState(false);
++    useEffect(() => {
++        const firestore = firebase.firestore();
++        setLoading(true);
++        firestore
++            .collection("registerInfo")
++            .get()
++            .then((snap) => {
++                const hateList = snap.docs
++                    .map((e) => e.id)
++                    .filter((id) => id !== userUid);
++                firestore
++                    .collection("Hate")
++                    .doc(userUid)
++                    .collection("HateList")
++                    .get()
++                    .then((snap) => {
++                        const ids = snap.docs.map((e) => e.id);
++                        hateList
++                            .filter((s) => !ids.includes(s))
++                            .forEach((uid) =>
++                                firestore
++                                    .collection("registerInfo")
++                                    .doc(uid)
++                                    .get()
++                                    .then((snap) => {
++                                        const data = snap.data();
++                                        console.log(data)
++                                        setPeople((people) => [
++                                            {
++                                                ...data
++                                            },
++                                            ...people,
++                                        ]);
++                                    })
++                            )
++                        setLoading(false);
++                    });
++            })
++            .catch(() => setLoading(false));
++        return () => {
++            setPeople([])
++        }
++    }, []);
++    //setPeople([...people, 'athena', 'josy', 'vito'])
++    if (loading) {
++        return <div>Carregando...</div>;
++    } else
++        return (
++            <React.Fragment>
++                <Header/>
++                <div>
++                    <div className="tinderContainer">
++                        {people
++                            .slice(0)
++                            .reverse()
++                            .map((person) => (
++                                <TinderCard
++                                    onCardLeftScreen={handleCardLeft}
++                                    className="swipe"
++                                    key={person.uid}
++                                    preventSwipe={["up", "down"]}
++                                >
++                                    <div
++                                        className="card"
++
++                                    >
++                                        <div className={"card-image"}
++                                             style={person.gender === "Homem" ?
++                                                 {backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0), rgb(74 65 121 / 52%)),url(${person.url})`}
++                                                 : {backgroundImage: `linear-gradient(rgb(0 0 0 / 0%), rgb(102 65 121 / 52%)),url(${person.url})`}
++                                             }>
++                                            <h3>{person.name}, {getAge(person.bDay)}</h3>
++                                        </div>
++                                        <div className={"infos"}>
++                                            <h3>Bio: {person.bio}</h3>
++                                        </div>
++                                        <div className={"Gostos"}>
++                                            <h3>Bio: {person.deslikes}</h3>
++                                        </div>
++                                        <div className={"Odeios"}>
++                                            <h3>Bio: {person.like}</h3>
++                                        </div>
++
++
++                                    </div>
++
++
++                                </TinderCard>
++                            ))}
++                    </div>
++                </div>
++                <SwipeButtons/>
++            </React.Fragment>
++        );
+ }
+ 
+ export default TinderCards;
+Index: .eslintcache
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[{\"/home/vitor/Documents/Facu/PER/Web/banginder/src/App.jsx\":\"1\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/Header/Header.jsx\":\"2\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/SwipeButtons/SwipeButtons.jsx\":\"3\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Perfil/Perfil.jsx\":\"4\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/ChatScreen/ChatScreen.jsx\":\"5\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx\":\"6\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/auth.jsx\":\"7\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx\":\"8\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/ChatRow/ChatRow.jsx\":\"9\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Registrar/Registrar.jsx\":\"10\",\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Login/Login.jsx\":\"11\"},{\"size\":2570,\"mtime\":1607641467173,\"results\":\"12\",\"hashOfConfig\":\"13\"},{\"size\":1290,\"mtime\":1607644243802,\"results\":\"14\",\"hashOfConfig\":\"13\"},{\"size\":1216,\"mtime\":1607641774734,\"results\":\"15\",\"hashOfConfig\":\"13\"},{\"size\":373,\"mtime\":1607626305314,\"results\":\"16\",\"hashOfConfig\":\"13\"},{\"size\":2611,\"mtime\":1607640195924,\"results\":\"17\",\"hashOfConfig\":\"13\"},{\"size\":221,\"mtime\":1607626305314,\"results\":\"18\",\"hashOfConfig\":\"13\"},{\"size\":87,\"mtime\":1607626305314,\"results\":\"19\",\"hashOfConfig\":\"13\"},{\"size\":3412,\"mtime\":1607643305332,\"results\":\"20\",\"hashOfConfig\":\"13\"},{\"size\":624,\"mtime\":1607555401614,\"results\":\"21\",\"hashOfConfig\":\"13\"},{\"size\":955,\"mtime\":1607555401614,\"results\":\"22\",\"hashOfConfig\":\"13\"},{\"size\":2235,\"mtime\":1607644699553,\"results\":\"23\",\"hashOfConfig\":\"13\"},{\"filePath\":\"24\",\"messages\":\"25\",\"errorCount\":0,\"warningCount\":2,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"source\":null},\"1svzebt\",{\"filePath\":\"26\",\"messages\":\"27\",\"errorCount\":0,\"warningCount\":1,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"source\":null},{\"filePath\":\"28\",\"messages\":\"29\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"30\",\"messages\":\"31\",\"errorCount\":0,\"warningCount\":4,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"source\":null},{\"filePath\":\"32\",\"messages\":\"33\",\"errorCount\":0,\"warningCount\":2,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"source\":null},{\"filePath\":\"34\",\"messages\":\"35\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"36\"},{\"filePath\":\"37\",\"messages\":\"38\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":\"39\"},{\"filePath\":\"40\",\"messages\":\"41\",\"errorCount\":0,\"warningCount\":2,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"source\":null},{\"filePath\":\"42\",\"messages\":\"43\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"44\",\"messages\":\"45\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},{\"filePath\":\"46\",\"messages\":\"47\",\"errorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0},\"/home/vitor/Documents/Facu/PER/Web/banginder/src/App.jsx\",[\"48\",\"49\"],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/Header/Header.jsx\",[\"50\"],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/SwipeButtons/SwipeButtons.jsx\",[],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Perfil/Perfil.jsx\",[\"51\",\"52\",\"53\",\"54\"],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/ChatScreen/ChatScreen.jsx\",[\"55\",\"56\"],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx\",[],[\"57\",\"58\"],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/auth.jsx\",[],[\"59\",\"60\"],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx\",[\"61\",\"62\"],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/ChatRow/ChatRow.jsx\",[],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Registrar/Registrar.jsx\",[],\"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Login/Login.jsx\",[],{\"ruleId\":\"63\",\"severity\":1,\"message\":\"64\",\"line\":4,\"column\":8,\"nodeType\":\"65\",\"messageId\":\"66\",\"endLine\":4,\"endColumn\":14},{\"ruleId\":\"63\",\"severity\":1,\"message\":\"67\",\"line\":9,\"column\":8,\"nodeType\":\"65\",\"messageId\":\"66\",\"endLine\":9,\"endColumn\":20},{\"ruleId\":\"63\",\"severity\":1,\"message\":\"68\",\"line\":7,\"column\":9,\"nodeType\":\"65\",\"messageId\":\"66\",\"endLine\":7,\"endColumn\":13},{\"ruleId\":\"63\",\"severity\":1,\"message\":\"64\",\"line\":1,\"column\":8,\"nodeType\":\"65\",\"messageId\":\"66\",\"endLine\":1,\"endColumn\":14},{\"ruleId\":\"63\",\"severity\":1,\"message\":\"69\",\"line\":2,\"column\":8,\"nodeType\":\"65\",\"messageId\":\"66\",\"endLine\":2,\"endColumn\":19},{\"ruleId\":\"63\",\"severity\":1,\"message\":\"67\",\"line\":3,\"column\":8,\"nodeType\":\"65\",\"messageId\":\"66\",\"endLine\":3,\"endColumn\":20},{\"ruleId\":\"63\",\"severity\":1,\"message\":\"70\",\"line\":6,\"column\":17,\"nodeType\":\"65\",\"messageId\":\"66\",\"endLine\":6,\"endColumn\":25},{\"ruleId\":\"63\",\"severity\":1,\"message\":\"71\",\"line\":10,\"column\":10,\"nodeType\":\"65\",\"messageId\":\"66\",\"endLine\":10,\"endColumn\":17},{\"ruleId\":\"72\",\"severity\":1,\"message\":\"73\",\"line\":51,\"column\":6,\"nodeType\":\"74\",\"endLine\":51,\"endColumn\":8,\"suggestions\":\"75\"},{\"ruleId\":\"76\",\"replacedBy\":\"77\"},{\"ruleId\":\"78\",\"replacedBy\":\"79\"},{\"ruleId\":\"76\",\"replacedBy\":\"80\"},{\"ruleId\":\"78\",\"replacedBy\":\"81\"},{\"ruleId\":\"82\",\"severity\":1,\"message\":\"83\",\"line\":15,\"column\":19,\"nodeType\":\"84\",\"messageId\":\"85\",\"endLine\":15,\"endColumn\":21},{\"ruleId\":\"72\",\"severity\":1,\"message\":\"73\",\"line\":81,\"column\":6,\"nodeType\":\"74\",\"endLine\":81,\"endColumn\":8,\"suggestions\":\"86\"},\"no-unused-vars\",\"'Header' is defined but never used.\",\"Identifier\",\"unusedVar\",\"'SwipeButtons' is defined but never used.\",\"'Link' is defined but never used.\",\"'TinderCards' is defined but never used.\",\"'useState' is defined but never used.\",\"'loading' is assigned a value but never used.\",\"react-hooks/exhaustive-deps\",\"React Hook useEffect has a missing dependency: 'userUid'. Either include it or remove the dependency array.\",\"ArrayExpression\",[\"87\"],\"no-native-reassign\",[\"88\"],\"no-negated-in-lhs\",[\"89\"],[\"88\"],[\"89\"],\"eqeqeq\",\"Expected '===' and instead saw '=='.\",\"BinaryExpression\",\"unexpected\",[\"90\"],{\"desc\":\"91\",\"fix\":\"92\"},\"no-global-assign\",\"no-unsafe-negation\",{\"desc\":\"91\",\"fix\":\"93\"},\"Update the dependencies array to be: [userUid]\",{\"range\":\"94\",\"text\":\"95\"},{\"range\":\"96\",\"text\":\"95\"},[1426,1428],\"[userUid]\",[2339,2341]]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.eslintcache b/.eslintcache
+--- a/.eslintcache	(revision 6d16d19b018661b2047526f613167801b8013b8e)
++++ b/.eslintcache	(date 1607652043934)
+@@ -1,1 +1,1 @@
+-[{"/home/vitor/Documents/Facu/PER/Web/banginder/src/App.jsx":"1","/home/vitor/Documents/Facu/PER/Web/banginder/src/components/Header/Header.jsx":"2","/home/vitor/Documents/Facu/PER/Web/banginder/src/components/SwipeButtons/SwipeButtons.jsx":"3","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Perfil/Perfil.jsx":"4","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/ChatScreen/ChatScreen.jsx":"5","/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx":"6","/home/vitor/Documents/Facu/PER/Web/banginder/src/auth.jsx":"7","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx":"8","/home/vitor/Documents/Facu/PER/Web/banginder/src/components/ChatRow/ChatRow.jsx":"9","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Registrar/Registrar.jsx":"10","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Login/Login.jsx":"11"},{"size":2570,"mtime":1607641467173,"results":"12","hashOfConfig":"13"},{"size":1290,"mtime":1607644243802,"results":"14","hashOfConfig":"13"},{"size":1216,"mtime":1607641774734,"results":"15","hashOfConfig":"13"},{"size":373,"mtime":1607626305314,"results":"16","hashOfConfig":"13"},{"size":2611,"mtime":1607640195924,"results":"17","hashOfConfig":"13"},{"size":221,"mtime":1607626305314,"results":"18","hashOfConfig":"13"},{"size":87,"mtime":1607626305314,"results":"19","hashOfConfig":"13"},{"size":3412,"mtime":1607643305332,"results":"20","hashOfConfig":"13"},{"size":624,"mtime":1607555401614,"results":"21","hashOfConfig":"13"},{"size":955,"mtime":1607555401614,"results":"22","hashOfConfig":"13"},{"size":2235,"mtime":1607644699553,"results":"23","hashOfConfig":"13"},{"filePath":"24","messages":"25","errorCount":0,"warningCount":2,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},"1svzebt",{"filePath":"26","messages":"27","errorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"28","messages":"29","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"30","messages":"31","errorCount":0,"warningCount":4,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"32","messages":"33","errorCount":0,"warningCount":2,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"34","messages":"35","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"36"},{"filePath":"37","messages":"38","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"39"},{"filePath":"40","messages":"41","errorCount":0,"warningCount":2,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"42","messages":"43","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"44","messages":"45","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"46","messages":"47","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"/home/vitor/Documents/Facu/PER/Web/banginder/src/App.jsx",["48","49"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/Header/Header.jsx",["50"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/SwipeButtons/SwipeButtons.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Perfil/Perfil.jsx",["51","52","53","54"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/ChatScreen/ChatScreen.jsx",["55","56"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx",[],["57","58"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/auth.jsx",[],["59","60"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx",["61","62"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/ChatRow/ChatRow.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Registrar/Registrar.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Login/Login.jsx",[],{"ruleId":"63","severity":1,"message":"64","line":4,"column":8,"nodeType":"65","messageId":"66","endLine":4,"endColumn":14},{"ruleId":"63","severity":1,"message":"67","line":9,"column":8,"nodeType":"65","messageId":"66","endLine":9,"endColumn":20},{"ruleId":"63","severity":1,"message":"68","line":7,"column":9,"nodeType":"65","messageId":"66","endLine":7,"endColumn":13},{"ruleId":"63","severity":1,"message":"64","line":1,"column":8,"nodeType":"65","messageId":"66","endLine":1,"endColumn":14},{"ruleId":"63","severity":1,"message":"69","line":2,"column":8,"nodeType":"65","messageId":"66","endLine":2,"endColumn":19},{"ruleId":"63","severity":1,"message":"67","line":3,"column":8,"nodeType":"65","messageId":"66","endLine":3,"endColumn":20},{"ruleId":"63","severity":1,"message":"70","line":6,"column":17,"nodeType":"65","messageId":"66","endLine":6,"endColumn":25},{"ruleId":"63","severity":1,"message":"71","line":10,"column":10,"nodeType":"65","messageId":"66","endLine":10,"endColumn":17},{"ruleId":"72","severity":1,"message":"73","line":51,"column":6,"nodeType":"74","endLine":51,"endColumn":8,"suggestions":"75"},{"ruleId":"76","replacedBy":"77"},{"ruleId":"78","replacedBy":"79"},{"ruleId":"76","replacedBy":"80"},{"ruleId":"78","replacedBy":"81"},{"ruleId":"82","severity":1,"message":"83","line":15,"column":19,"nodeType":"84","messageId":"85","endLine":15,"endColumn":21},{"ruleId":"72","severity":1,"message":"73","line":81,"column":6,"nodeType":"74","endLine":81,"endColumn":8,"suggestions":"86"},"no-unused-vars","'Header' is defined but never used.","Identifier","unusedVar","'SwipeButtons' is defined but never used.","'Link' is defined but never used.","'TinderCards' is defined but never used.","'useState' is defined but never used.","'loading' is assigned a value but never used.","react-hooks/exhaustive-deps","React Hook useEffect has a missing dependency: 'userUid'. Either include it or remove the dependency array.","ArrayExpression",["87"],"no-native-reassign",["88"],"no-negated-in-lhs",["89"],["88"],["89"],"eqeqeq","Expected '===' and instead saw '=='.","BinaryExpression","unexpected",["90"],{"desc":"91","fix":"92"},"no-global-assign","no-unsafe-negation",{"desc":"91","fix":"93"},"Update the dependencies array to be: [userUid]",{"range":"94","text":"95"},{"range":"96","text":"95"},[1426,1428],"[userUid]",[2339,2341]]
+\ No newline at end of file
++[{"/home/vitor/Documents/Facu/PER/Web/banginder/src/App.jsx":"1","/home/vitor/Documents/Facu/PER/Web/banginder/src/components/Header/Header.jsx":"2","/home/vitor/Documents/Facu/PER/Web/banginder/src/components/SwipeButtons/SwipeButtons.jsx":"3","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Perfil/Perfil.jsx":"4","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/ChatScreen/ChatScreen.jsx":"5","/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx":"6","/home/vitor/Documents/Facu/PER/Web/banginder/src/auth.jsx":"7","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx":"8","/home/vitor/Documents/Facu/PER/Web/banginder/src/components/ChatRow/ChatRow.jsx":"9","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Registrar/Registrar.jsx":"10","/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Login/Login.jsx":"11"},{"size":2453,"mtime":1607645286955,"results":"12","hashOfConfig":"13"},{"size":1290,"mtime":1607645610936,"results":"14","hashOfConfig":"13"},{"size":1216,"mtime":1607641774734,"results":"15","hashOfConfig":"13"},{"size":373,"mtime":1607626305314,"results":"16","hashOfConfig":"13"},{"size":2611,"mtime":1607640195924,"results":"17","hashOfConfig":"13"},{"size":221,"mtime":1607626305314,"results":"18","hashOfConfig":"13"},{"size":87,"mtime":1607626305314,"results":"19","hashOfConfig":"13"},{"size":5529,"mtime":1607652038499,"results":"20","hashOfConfig":"13"},{"size":624,"mtime":1607555401614,"results":"21","hashOfConfig":"13"},{"size":955,"mtime":1607555401614,"results":"22","hashOfConfig":"13"},{"size":2235,"mtime":1607644699553,"results":"23","hashOfConfig":"13"},{"filePath":"24","messages":"25","errorCount":0,"warningCount":2,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},"1svzebt",{"filePath":"26","messages":"27","errorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"28","messages":"29","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"30","messages":"31","errorCount":0,"warningCount":4,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"32","messages":"33","errorCount":0,"warningCount":2,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"34","messages":"35","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"36"},{"filePath":"37","messages":"38","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":"39"},{"filePath":"40","messages":"41","errorCount":0,"warningCount":2,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"42","messages":"43","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"44","messages":"45","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"46","messages":"47","errorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"/home/vitor/Documents/Facu/PER/Web/banginder/src/App.jsx",["48","49"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/Header/Header.jsx",["50"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/SwipeButtons/SwipeButtons.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Perfil/Perfil.jsx",["51","52","53","54"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/ChatScreen/ChatScreen.jsx",["55","56"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/index.jsx",[],["57","58"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/auth.jsx",[],["59","60"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/TinderCard/TinderCards.jsx",["61","62"],"/home/vitor/Documents/Facu/PER/Web/banginder/src/components/ChatRow/ChatRow.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Registrar/Registrar.jsx",[],"/home/vitor/Documents/Facu/PER/Web/banginder/src/containers/Login/Login.jsx",[],{"ruleId":"63","severity":1,"message":"64","line":4,"column":8,"nodeType":"65","messageId":"66","endLine":4,"endColumn":14},{"ruleId":"63","severity":1,"message":"67","line":9,"column":8,"nodeType":"65","messageId":"66","endLine":9,"endColumn":20},{"ruleId":"63","severity":1,"message":"68","line":7,"column":9,"nodeType":"65","messageId":"66","endLine":7,"endColumn":13},{"ruleId":"63","severity":1,"message":"64","line":1,"column":8,"nodeType":"65","messageId":"66","endLine":1,"endColumn":14},{"ruleId":"63","severity":1,"message":"69","line":2,"column":8,"nodeType":"65","messageId":"66","endLine":2,"endColumn":19},{"ruleId":"63","severity":1,"message":"67","line":3,"column":8,"nodeType":"65","messageId":"66","endLine":3,"endColumn":20},{"ruleId":"63","severity":1,"message":"70","line":6,"column":17,"nodeType":"65","messageId":"66","endLine":6,"endColumn":25},{"ruleId":"63","severity":1,"message":"71","line":10,"column":10,"nodeType":"65","messageId":"66","endLine":10,"endColumn":17},{"ruleId":"72","severity":1,"message":"73","line":51,"column":6,"nodeType":"74","endLine":51,"endColumn":8,"suggestions":"75"},{"ruleId":"76","replacedBy":"77"},{"ruleId":"78","replacedBy":"79"},{"ruleId":"76","replacedBy":"80"},{"ruleId":"78","replacedBy":"81"},{"ruleId":"82","severity":1,"message":"83","line":25,"column":23,"nodeType":"84","messageId":"85","endLine":25,"endColumn":25},{"ruleId":"72","severity":1,"message":"73","line":87,"column":8,"nodeType":"74","endLine":87,"endColumn":10,"suggestions":"86"},"no-unused-vars","'Header' is defined but never used.","Identifier","unusedVar","'SwipeButtons' is defined but never used.","'Link' is defined but never used.","'TinderCards' is defined but never used.","'useState' is defined but never used.","'loading' is assigned a value but never used.","react-hooks/exhaustive-deps","React Hook useEffect has a missing dependency: 'userUid'. Either include it or remove the dependency array.","ArrayExpression",["87"],"no-native-reassign",["88"],"no-negated-in-lhs",["89"],["88"],["89"],"eqeqeq","Expected '===' and instead saw '=='.","BinaryExpression","unexpected",["90"],{"desc":"91","fix":"92"},"no-global-assign","no-unsafe-negation",{"desc":"91","fix":"93"},"Update the dependencies array to be: [userUid]",{"range":"94","text":"95"},{"range":"96","text":"95"},[1426,1428],"[userUid]",[3169,3171]]
+\ No newline at end of file

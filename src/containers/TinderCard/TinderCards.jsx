@@ -22,7 +22,7 @@ function TinderCards() {
 
     const handleCardLeft = (direction) => {
         const enemyUid = people[0].uid;
-        if (direction == "left") {
+        if (direction === "left") {
             console.log(people[0].name);
             firebase
                 .firestore()
@@ -39,7 +39,6 @@ function TinderCards() {
                     ],
                 });
         }
-        setPeople((people) => [...people.slice(1)]);
     };
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -113,16 +112,33 @@ function TinderCards() {
                                                  {backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0), rgb(74 65 121 / 52%)),url(${person.url})`}
                                                  : {backgroundImage: `linear-gradient(rgb(0 0 0 / 0%), rgb(102 65 121 / 52%)),url(${person.url})`}
                                              }>
-                                            <h3>{person.name}, {getAge(person.bDay)}</h3>
+                                            <h3>{person.name}</h3>
                                         </div>
                                         <div className={"infos"}>
-                                            <h3>Bio: {person.bio}</h3>
+                                            <h3>Bio:</h3> <p>{person.bio}</p>
                                         </div>
-                                        <div className={"Gostos"}>
-                                            <h3>Bio: {person.deslikes}</h3>
+
+                                        <div className={"gostos"}>
+                                            <h3>Gostos:</h3>
+                                            <div className={"gostos-container"}>
+                                                {person.dislikes && person.dislikes.map((x) => {
+                                                    return (
+                                                        <p>{x}</p>
+                                                    )
+                                                })}
+                                            </div>
                                         </div>
-                                        <div className={"Odeios"}>
-                                            <h3>Bio: {person.like}</h3>
+
+                                        <div className={"odios"}>
+                                            <h3>Odios:</h3>
+                                            <div className={"odios-container"}>
+                                                {person.likes && person.likes.map((x) => {
+                                                        return (
+                                                            <p>{x}</p>
+                                                        )
+                                                    }
+                                                )}
+                                            </div>
                                         </div>
 
 
@@ -133,7 +149,6 @@ function TinderCards() {
                             ))}
                     </div>
                 </div>
-                <SwipeButtons/>
             </React.Fragment>
         );
 }
