@@ -109,7 +109,6 @@ function TinderCards() {
               ))}
           </div>
         </div>
-        <SwipeButtons />
       </React.Fragment>
     );
 }

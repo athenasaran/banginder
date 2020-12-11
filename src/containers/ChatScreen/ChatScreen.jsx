@@ -27,12 +27,15 @@ function ChatScreen(props) {
     setLoading(true);
     firestore
       .collection("Hate")
-      .doc(userUid)
-      .collection("HateList")
       .doc(enemyId)
+      .collection("HateList")
+      .doc(userUid)
       .get()
       .then((snap) => {
         const data = snap.data();
+        if(!data){
+          return
+        }
         setMessages(
           data.message.map((m) => {
             return { uid: enemyId, ...m };
@@ -40,9 +43,9 @@ function ChatScreen(props) {
         );
         firestore
           .collection("Hate")
-          .doc(enemyId)
-          .collection("HateList")
           .doc(userUid)
+          .collection("HateList")
+          .doc(enemyId)
           .get()
           .then((snap) => {
             const data = snap.data();
@@ -64,18 +67,18 @@ function ChatScreen(props) {
     setMessages([...messages, { message: input }]);
     firestore
       .collection("Hate")
-      .doc(enemyId)
-      .collection("HateList")
       .doc(userUid)
+      .collection("HateList")
+      .doc(enemyId)
       .get()
       .then((snap) => {
         const data = snap.data();
         setList(data.message);
         firestore
           .collection("Hate")
-          .doc(enemyId)
-          .collection("HateList")
           .doc(userUid)
+          .collection("HateList")
+          .doc(enemyId)
           .set({
             message: [obj, ...list],
           });

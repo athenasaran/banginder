@@ -9,7 +9,7 @@ function Chat() {
   const [exists, setExists] = useState(false);
   const [people, setPeople] = useState([]);
   const userUid = localStorage.getItem("user_id");
-  useEffect(async () => {
+  useEffect(() => {
     const firestore = firebase.firestore();
     setLoading(true);
     firestore
@@ -17,7 +17,7 @@ function Chat() {
       .doc(userUid)
       .collection("HateList")
       .get()
-      .then(async (snap) => {
+      .then((snap) => {
         console.log(snap.docs[0].data());
         const HateList = snap.docs
           .map((e) => {
@@ -25,15 +25,14 @@ function Chat() {
               uid: e.id,
               message: e
                 .data()
-                .message.reverse()
-                .filter((e) => e.text != "")[0]?.text,
+                .message
+                .filter((e) => e.text !== "")[0]?.text,
             };
           })
-          .filter(async (e) => {
-            const doc = await firestore.collection("Hate").doc(e.uid).collection("HateList").doc(userUid).get()
-            return doc.exists
-          });
-        HateList.forEach((e) => {
+        HateList.filter((e) => {
+          const doc = firestore.collection("Hate").doc(e.uid).collection("HateList").doc(userUid).get()
+          return true
+        }).forEach((e) => {
           firestore
             .collection("registerInfo")
             .doc(e.uid)
