@@ -25,7 +25,6 @@ const firebaseConfig = {
     appId: "1:577753223059:web:2355a8ad6f3bbc6e916266",
 };
 
-<<<<<<< HEAD
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -40,23 +39,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       }
     }}
   />
-=======
-const PrivateRoute = ({component: Component, ...rest}) => (
-    <Route
-        {...rest}
-        render={(props) => {
-            console.log("Amigo estou aq!!!!!");
-            if (isAuthenticated()) {
-                return <Component {...props} />;
-            } else {
-                //setMessage("Você não está autenticado!");
-                return (
-                    <Redirect to={{pathname: "/", state: {from: props.location}}}/>
-                );
-            }
-        }}
-    />
->>>>>>> 002fef9387115a034bb80263fcd8c78458f253bc
 );
 
 function App() {
